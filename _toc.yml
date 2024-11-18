@@ -4,7 +4,4 @@
 format: jb-book
 root: index
 chapters:
-- file: chapters/session_05/index
-  sections:
-  - file: chapters/session_05/exercise_05
-  - file: chapters/session_05/exercise_05_solution
+- file: chapters/exercise_05
