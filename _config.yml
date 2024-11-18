@@ -24,7 +24,7 @@ bibtex_bibfiles:
 repository:
   url: https://github.com/bckrlab/data-science-course  # Online location of your book
   branch: main  # Which branch of the repository should be used when creating links (optional)
-#  path_to_book: ""  # Optional path to your book, relative to the repository root
+  path_to_book: ""  # Optional path to your book, relative to the repository root
 
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
