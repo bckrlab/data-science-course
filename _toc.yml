@@ -2,9 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro
+root: index
 chapters:
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
-- file: chapters/01_tutorial
+- file: chapters/session/exercise_05
+- file: chapters/session/exercise_05_solution
