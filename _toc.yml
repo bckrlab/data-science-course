@@ -4,4 +4,10 @@
 format: jb-book
 root: index
 chapters:
+- file: chapters/exercise_02
+- file: chapters/exercise_03
+- file: chapters/exercise_04
 - file: chapters/exercise_05
+- file: chapters/exercise_06
+- file: chapters/exercise_07
+- file: chapters/exercise_08
