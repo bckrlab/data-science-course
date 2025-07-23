@@ -2,12 +2,12 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: index
+root: content/index
 chapters:
-- file: chapters/exercise_02
-- file: chapters/exercise_03
-- file: chapters/exercise_04
-- file: chapters/exercise_05
-- file: chapters/exercise_06
-- file: chapters/exercise_07
-- file: chapters/exercise_08
+- file: content/chapters/exercise_02
+- file: content/chapters/exercise_03
+- file: content/chapters/exercise_04
+- file: content/chapters/exercise_05
+- file: content/chapters/exercise_06
+- file: content/chapters/exercise_07
+- file: content/chapters/exercise_08

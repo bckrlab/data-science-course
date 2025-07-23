@@ -1,5 +1,4 @@
-jupyter-book
+# upgrade to jupyter book v2
+jupyter-book==2.0.0b2
 matplotlib
 numpy
-# pydata-sphinx-theme 0.16 breaks sidebar
-pydata-sphinx-theme<0.16
