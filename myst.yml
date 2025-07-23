@@ -1,0 +1,33 @@
+version: 1
+project:
+  title: Data Science Course
+  authors:
+    - name: bckrlab.org
+  copyright: '2025'
+  github: bckrlab/data-science-course
+  thebe:
+    binder:
+      repo: bckrlab/data-science-course
+      provider: github
+      url: https://mybinder.org
+      ref: main
+  bibliography:
+    - references.bib
+  exports:
+    - format: pdf
+      template: plain_latex_book
+      output: exports/book.pdf
+  toc:
+    - file: content/index.md
+    - file: content/chapters/exercise_02.ipynb
+    - file: content/chapters/exercise_03.ipynb
+    - file: content/chapters/exercise_04.ipynb
+    - file: content/chapters/exercise_05.ipynb
+    - file: content/chapters/exercise_06.ipynb
+    - file: content/chapters/exercise_07.ipynb
+    - file: content/chapters/exercise_08.ipynb
+site:
+  options:
+    logo: logo.png
+    folders: true
+  template: book-theme
