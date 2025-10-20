@@ -1,5 +1,6 @@
 jupyter-book
 matplotlib
 numpy
+pandas
 # pydata-sphinx-theme 0.16 breaks sidebar
 pydata-sphinx-theme<0.16
