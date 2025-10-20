@@ -4,6 +4,11 @@
 format: jb-book
 root: index
 chapters:
+- file: chapters/exercise_01
+  sections:
+  - file: chapters/exercise_01/intro-to-python_tutorial
+  - file: chapters/exercise_01/intro-to-python_tasks
+  - file: chapters/exercise_01/CURVE
 - file: chapters/exercise_02
 - file: chapters/exercise_03
 - file: chapters/exercise_04
