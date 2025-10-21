@@ -1,6 +1,11 @@
-jupyter-book
-matplotlib
-numpy
-pandas
+jupyter-book~=1.0.4
+matplotlib~=3.10.7
+jupyterlab~=4.4.9
+numpy~=2.3.4
+pandas~=2.3.3
+seaborn~=0.13.2
+scikit-learn~=1.7.2
+kagglehub~=0.3.13
+
 # pydata-sphinx-theme 0.16 breaks sidebar
 pydata-sphinx-theme<0.16
