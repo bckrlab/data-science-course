@@ -4,15 +4,19 @@
 format: jb-book
 root: index
 chapters:
-- file: chapters/exercise_01
+- file: chapters/ws-25-26/titlepage
   sections:
-  - file: chapters/exercise_01/intro-to-python_tutorial
-  - file: chapters/exercise_01/intro-to-python_tasks
-  - file: chapters/exercise_01/CURVE
-- file: chapters/exercise_02
-- file: chapters/exercise_03
-- file: chapters/exercise_04
-- file: chapters/exercise_05
-- file: chapters/exercise_06
-- file: chapters/exercise_07
-- file: chapters/exercise_08
+  - file: chapters/ws-25-26/exercise_01
+    sections:
+    - file: chapters/ws-25-26/exercise_01/intro-to-python_tutorial
+    - file: chapters/ws-25-26/exercise_01/intro-to-python_tasks
+    - file: chapters/ws-25-26/exercise_01/CURVE
+- file: chapters/ws-24-25/titlepage
+  sections:
+  - file: chapters/ws-24-25/exercise_02
+  - file: chapters/ws-24-25/exercise_03
+  - file: chapters/ws-24-25/exercise_04
+  - file: chapters/ws-24-25/exercise_05
+  - file: chapters/ws-24-25/exercise_06
+  - file: chapters/ws-24-25/exercise_07
+  - file: chapters/ws-24-25/exercise_08
