@@ -11,6 +11,7 @@ chapters:
     - file: chapters/ws-25-26/exercise_01/intro-to-python_tutorial
     - file: chapters/ws-25-26/exercise_01/intro-to-python_tasks
     - file: chapters/ws-25-26/exercise_01/CURVE
+  - file: chapters/ws-25-26/exercise_02
 - file: chapters/ws-24-25/titlepage
   sections:
   - file: chapters/ws-24-25/exercise_02
