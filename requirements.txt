@@ -1,4 +1,4 @@
 # upgrade to jupyter book v2
-jupyter-book==2.0.0b2
+jupyter-book>=2.0
 matplotlib
 numpy
