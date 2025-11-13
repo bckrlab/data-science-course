@@ -1,0 +1,46 @@
+version: 1
+project:
+  title: Data Science Course
+  authors:
+    - name: bckrlab.org
+  copyright: '2025'
+  github: bckrlab/data-science-course
+  thebe:
+    binder:
+      repo: bckrlab/data-science-course
+      provider: github
+      url: https://mybinder.org
+      ref: main
+  bibliography:
+    - references.bib
+  exports:
+    - format: pdf
+      template: plain_latex_book
+      output: exports/book.pdf
+  toc:
+    - file: index.md
+    - file: chapters/ws-25-26/titlepage.ipynb
+      children:
+        - file: chapters/ws-25-26/exercise_01.ipynb
+          children:
+            - file: chapters/ws-25-26/exercise_01/intro-to-python_tutorial.ipynb
+            - file: chapters/ws-25-26/exercise_01/intro-to-python_tasks.ipynb
+            - file: chapters/ws-25-26/exercise_01/CURVE.ipynb
+        - file: chapters/ws-25-26/exercise_02.ipynb
+        - file: chapters/ws-25-26/exercise_03.ipynb
+        - file: chapters/ws-25-26/exercise_04.ipynb
+        - file: chapters/ws-25-26/exercise_05.ipynb
+    - file: chapters/ws-24-25/titlepage.ipynb
+      children:
+        - file: chapters/ws-24-25/exercise_02.ipynb
+        - file: chapters/ws-24-25/exercise_03.ipynb
+        - file: chapters/ws-24-25/exercise_04.ipynb
+        - file: chapters/ws-24-25/exercise_05.ipynb
+        - file: chapters/ws-24-25/exercise_06.ipynb
+        - file: chapters/ws-24-25/exercise_07.ipynb
+        - file: chapters/ws-24-25/exercise_08.ipynb
+site:
+  options:
+    logo: logo.png
+    folders: true
+  template: book-theme
