@@ -41,6 +41,7 @@ project:
         - file: chapters/ws-24-25/exercise_08.ipynb
 site:
   options:
+    favicon: favicon.ico
     logo: logo.png
     folders: true
   template: book-theme
