@@ -7,3 +7,5 @@ pandas~=2.3.3
 seaborn~=0.13.2
 scikit-learn~=1.7.2
 kagglehub~=0.3.13
+ipywidgets~=8.1.8
+statsmodels~=0.14.5
