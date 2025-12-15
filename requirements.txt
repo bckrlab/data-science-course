@@ -11,3 +11,4 @@ ipywidgets~=8.1.8
 statsmodels~=0.14.5
 torch~=2.9.1
 torchvision~=0.24.1
+git+https://github.com/toledo60/pyLHD.git@68d4d5b52ffe2513e1bfe01680bb12d376a02fa8
