@@ -35,6 +35,7 @@ project:
         - file: chapters/ws-25-26/exercise_08.ipynb
         - file: chapters/ws-25-26/exercise_09.ipynb
         - file: chapters/ws-25-26/exercise_10.ipynb
+        - file: chapters/ws-25-26/exercise_11.ipynb
     - file: chapters/ws-24-25/titlepage.ipynb
       children:
         - file: chapters/ws-24-25/exercise_02.ipynb
