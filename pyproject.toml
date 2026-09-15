@@ -3,19 +3,19 @@ name = "data-science-course"
 version = "0.1.0"
 requires-python = ">=3.12,<3.13"
 dependencies = [
-  "jupyter-book~=2.0.2",
-  "jupyterlab~=4.4.9",
-  "jupyterlab-myst~=2.4.2",
-  "matplotlib~=3.10.7",
-  "numpy~=2.3.4",
-  "pandas~=2.3.3",
+  "jupyter-book~=2.1.6",
+  "jupyterlab~=4.6.3",
+  "jupyterlab-myst~=2.7.0",
+  "matplotlib~=3.11.2",
+  "numpy~=2.5.3",
+  "pandas~=3.0.5",
   "seaborn~=0.13.2",
-  "scikit-learn~=1.7.2",
-  "kagglehub~=0.3.13",
-  "ipywidgets~=8.1.8",
-  "statsmodels~=0.14.5",
-  "torch~=2.9.1",
-  "torchvision~=0.24.1",
+  "scikit-learn~=1.9.1",
+  "kagglehub~=1.0.2",
+  "ipywidgets~=8.1.9",
+  "statsmodels~=0.15.0",
+  "torch~=2.14.0",
+  "torchvision~=0.29.0",
   "pyLHD @ git+https://github.com/toledo60/pyLHD.git@68d4d5b52ffe2513e1bfe01680bb12d376a02fa8",
 ]
 
