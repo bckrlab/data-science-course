@@ -44,7 +44,10 @@ project:
           children:
             - file: chapters/exercise_06/regularization-ridge-lasso.ipynb
             - file: chapters/exercise_06/linear-vs-logistic-classification.ipynb
-        - file: chapters/exercise_07.ipynb
+        - title: Exercise 07
+          children:
+            - file: chapters/exercise_07/mlp-foundations.ipynb
+            - file: chapters/exercise_07/mlp-implementation-and-cnn.ipynb
         - file: chapters/exercise_08.ipynb
         - file: chapters/exercise_09.ipynb
         - file: chapters/exercise_10.ipynb
