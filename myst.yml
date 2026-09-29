@@ -31,7 +31,11 @@ project:
           children:
             - file: chapters/exercise_03/pca-dimensionality-reduction.ipynb
             - file: chapters/exercise_03/kmeans-clustering.ipynb
-        - file: chapters/exercise_04.ipynb
+        - title: Exercise 04
+          children:
+            - file: chapters/exercise_04/evaluation-metrics.ipynb
+            - file: chapters/exercise_04/holdout-cross-validation.ipynb
+            - file: chapters/exercise_04/reference-values-and-imbalance.ipynb
         - file: chapters/exercise_05.ipynb
         - file: chapters/exercise_06.ipynb
         - file: chapters/exercise_07.ipynb
