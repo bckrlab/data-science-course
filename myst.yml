@@ -19,23 +19,23 @@ project:
       output: exports/book.pdf
   toc:
     - file: index.md
-    - file: chapters/ws-25-26/titlepage.ipynb
+    - file: chapters/titlepage.ipynb
       children:
-        - file: chapters/ws-25-26/exercise_01.ipynb
+        - file: chapters/exercise_01.ipynb
           children:
-            - file: chapters/ws-25-26/exercise_01/intro-to-python_tutorial.ipynb
-            - file: chapters/ws-25-26/exercise_01/intro-to-python_tasks.ipynb
-            - file: chapters/ws-25-26/exercise_01/CURVE.ipynb
-        - file: chapters/ws-25-26/exercise_02.ipynb
-        - file: chapters/ws-25-26/exercise_03.ipynb
-        - file: chapters/ws-25-26/exercise_04.ipynb
-        - file: chapters/ws-25-26/exercise_05.ipynb
-        - file: chapters/ws-25-26/exercise_06.ipynb
-        - file: chapters/ws-25-26/exercise_07.ipynb
-        - file: chapters/ws-25-26/exercise_08.ipynb
-        - file: chapters/ws-25-26/exercise_09.ipynb
-        - file: chapters/ws-25-26/exercise_10.ipynb
-        - file: chapters/ws-25-26/exercise_11.ipynb
+            - file: chapters/exercise_01/intro-to-python_tutorial.ipynb
+            - file: chapters/exercise_01/intro-to-python_tasks.ipynb
+            - file: chapters/exercise_01/CURVE.ipynb
+        - file: chapters/exercise_02.ipynb
+        - file: chapters/exercise_03.ipynb
+        - file: chapters/exercise_04.ipynb
+        - file: chapters/exercise_05.ipynb
+        - file: chapters/exercise_06.ipynb
+        - file: chapters/exercise_07.ipynb
+        - file: chapters/exercise_08.ipynb
+        - file: chapters/exercise_09.ipynb
+        - file: chapters/exercise_10.ipynb
+        - file: chapters/exercise_11.ipynb
 site:
   options:
     favicon: favicon.ico
