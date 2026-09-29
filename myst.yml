@@ -21,10 +21,10 @@ project:
     - file: index.md
     - file: chapters/titlepage.ipynb
       children:
-        - file: chapters/exercise_01.ipynb
+        - title: Exercise 01
           children:
-            - file: chapters/exercise_01/intro-to-python_tutorial.ipynb
             - file: chapters/exercise_01/intro-to-python_tasks.ipynb
+            - file: chapters/exercise_01/intro-to-python_tutorial.ipynb
             - file: chapters/exercise_01/CURVE.ipynb
         - file: chapters/exercise_02.ipynb
         - file: chapters/exercise_03.ipynb
