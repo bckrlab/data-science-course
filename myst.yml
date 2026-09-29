@@ -27,7 +27,10 @@ project:
             - file: chapters/exercise_01/intro-to-python_tutorial.ipynb
             - file: chapters/exercise_01/CURVE.ipynb
         - file: chapters/exercise_02.ipynb
-        - file: chapters/exercise_03.ipynb
+        - title: Exercise 03
+          children:
+            - file: chapters/exercise_03/pca-dimensionality-reduction.ipynb
+            - file: chapters/exercise_03/kmeans-clustering.ipynb
         - file: chapters/exercise_04.ipynb
         - file: chapters/exercise_05.ipynb
         - file: chapters/exercise_06.ipynb
