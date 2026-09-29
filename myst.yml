@@ -36,7 +36,10 @@ project:
             - file: chapters/exercise_04/evaluation-metrics.ipynb
             - file: chapters/exercise_04/holdout-cross-validation.ipynb
             - file: chapters/exercise_04/reference-values-and-imbalance.ipynb
-        - file: chapters/exercise_05.ipynb
+        - title: Exercise 05
+          children:
+            - file: chapters/exercise_05/linear-regression-basics.ipynb
+            - file: chapters/exercise_05/ols-projection-geometry.ipynb
         - file: chapters/exercise_06.ipynb
         - file: chapters/exercise_07.ipynb
         - file: chapters/exercise_08.ipynb
