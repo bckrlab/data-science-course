@@ -40,7 +40,10 @@ project:
           children:
             - file: chapters/exercise_05/linear-regression-basics.ipynb
             - file: chapters/exercise_05/ols-projection-geometry.ipynb
-        - file: chapters/exercise_06.ipynb
+        - title: Exercise 06
+          children:
+            - file: chapters/exercise_06/regularization-ridge-lasso.ipynb
+            - file: chapters/exercise_06/linear-vs-logistic-classification.ipynb
         - file: chapters/exercise_07.ipynb
         - file: chapters/exercise_08.ipynb
         - file: chapters/exercise_09.ipynb
