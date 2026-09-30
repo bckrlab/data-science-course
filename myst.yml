@@ -54,7 +54,11 @@ project:
             - file: chapters/exercise_09/full-factorial-and-lhs-design.ipynb
             - file: chapters/exercise_09/tplhd-optimized-lhs.ipynb
         - file: chapters/exercise_10.ipynb
-        - file: chapters/exercise_11.ipynb
+        - title: Exercise 11
+          children:
+            - file: chapters/exercise_11/decision-tree-classifier-fitting.ipynb
+            - file: chapters/exercise_11/manual-decision-tree.ipynb
+            - file: chapters/exercise_11/random-forests.ipynb
 site:
   options:
     favicon: favicon.ico
