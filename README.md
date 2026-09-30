@@ -3,20 +3,29 @@
 
 # Data Science Course
 
-> Tutorials!!!
-
 ## Usage
 
 ### Building the book
 
 If you'd like to develop and/or build the Data Science Course book, you should:
 
-1. Clone this repository
-2. Install [uv](https://docs.astral.sh/uv/) and run `uv sync` to create a virtual environment with all dependencies
-3. (Optional) Edit the books source files located in the `chapters/` directory
-4. Run `uv run jupyter book start` to remove any existing builds
+> 1. Clone this repository
+> 2. Install [uv](https://docs.astral.sh/uv/) and run `uv sync` to create a virtual environment with all dependencies
+> 3. (Optional) Edit the books source files located in the `chapters/` directory
+> 4. Run `uv run jupyter book start` to remove any existing builds
 
 A fully-rendered HTML version of the book will be available at `http://localhost:3000`.
+
+Tip:
+If `uv sync` fails while building `oapackage` (a dependency of `pylhd`) with an
+error like `Could NOT find Python (missing: ... Development.Module ...)`, your
+system's Python 3.12 is missing development headers. Fix this by using a
+uv-managed Python instead of the system one:
+```
+uv python install 3.12
+rm -rf .venv
+uv sync -p 3.12
+```
 
 ## Credits
 
