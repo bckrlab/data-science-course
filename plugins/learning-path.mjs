@@ -205,22 +205,36 @@ function buildLearningPathHtml() {
   const visibleSessions = sessions.slice(0, renderCount);
   const visibleLayouts = layouts.slice(0, renderCount);
 
-  // Shift everything so the leftmost *rendered* node's edge sits at MARGIN,
-  // centering the visible path within its container. An unrevealed
-  // session's main point still counts (the line passes through it), but its
-  // extras don't — they're never rendered, so they mustn't widen/off-center
-  // the container. A trailing unrevealed suffix beyond renderCount doesn't
-  // count at all — its rows aren't rendered, so its geometry doesn't exist.
+  // Shift everything so the leftmost *rendered* edge (a node/extra, or the
+  // cloud's own footprint) sits at MARGIN, centering the visible path
+  // within its container. An unrevealed session's main point still counts
+  // (the line passes through it), but its extras don't — they're never
+  // rendered, so they mustn't widen/off-center the container. A trailing
+  // unrevealed suffix beyond renderCount doesn't count at all — its rows
+  // aren't rendered, so its geometry doesn't exist.
   const allX = visibleLayouts.flatMap((l, i) => [
     l.main.x,
     ...(visibleSessions[i].revealed ? l.extraPositions.map((p) => p.x) : []),
   ]);
   const nodeHalfMax = Math.max(NODE_MAIN, NODE_EXTRA) / 2;
-  const edgeHalfMax = Math.max(nodeHalfMax, hasUnrevealed ? CLOUD_WIDTH / 2 : 0);
   const minX = allX.length ? Math.min(...allX) : 0;
   const maxX = allX.length ? Math.max(...allX) : 0;
-  const shift = MARGIN + edgeHalfMax - minX;
-  const width = Math.round(maxX + shift + edgeHalfMax + MARGIN);
+  let leftEdge = minX - nodeHalfMax;
+  let rightEdge = maxX + nodeHalfMax;
+  // The cloud sits at the last revealed session's raw x (0 if there is
+  // none revealed at all). Fold its own left/right footprint into the
+  // bounds here instead of padding *both* sides of the node extremes by
+  // its half-width — the cloud is rarely at the extreme, so a blanket pad
+  // wastes space on whichever side it doesn't actually reach, and with a
+  // wide cloud that can push the container noticeably past what the
+  // node/extra layout alone needs.
+  const cloudCenterXRaw = lastRevealedIndex >= 0 ? visibleLayouts[lastRevealedIndex].main.x : 0;
+  if (hasUnrevealed) {
+    leftEdge = Math.min(leftEdge, cloudCenterXRaw - CLOUD_WIDTH / 2);
+    rightEdge = Math.max(rightEdge, cloudCenterXRaw + CLOUD_WIDTH / 2);
+  }
+  const shift = MARGIN - leftEdge;
+  const width = Math.round(rightEdge + shift + MARGIN);
   const baseHeight =
     renderCount > 0 ? TOP_PAD * 2 + (renderCount - 1) * ROW_HEIGHT : TOP_PAD * 2;
   const height = Math.round(baseHeight + (hasUnrevealed ? CLOUD_GAP_Y + CLOUD_HEIGHT / 2 : 0));
