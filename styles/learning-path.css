@@ -1,0 +1,134 @@
+/* Cosmetics for the plugins/learning-path.mjs directive. Layout (position,
+   size, line geometry) is set inline per-node by the plugin; this file only
+   covers colors, shapes and the phone-width fallback. */
+
+.lp-wrap {
+  position: relative;
+  margin: 2rem auto;
+  --lp-line: #94a3b8;
+  --lp-main-bg: #2563eb;
+  --lp-main-fg: #ffffff;
+  --lp-extra-bg: #eef2ff;
+  --lp-extra-fg: #1e293b;
+}
+
+@media (prefers-color-scheme: dark) {
+  .lp-wrap {
+    --lp-line: #64748b;
+    --lp-extra-bg: #1e293b;
+    --lp-extra-fg: #e2e8f0;
+  }
+}
+
+.lp-line {
+  position: absolute;
+  height: 0;
+  border-top: 2px dashed var(--lp-line);
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.lp-line.lp-mainline {
+  border-top-width: 3px;
+}
+
+.lp-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 18px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.lp-node.lp-main {
+  width: 90px;
+  height: 90px;
+  background: var(--lp-main-bg);
+}
+
+.lp-node.lp-extra {
+  width: 74px;
+  height: 74px;
+  background: var(--lp-extra-bg);
+}
+
+.lp-node a.lp-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.lp-node.lp-main a.lp-link {
+  color: var(--lp-main-fg);
+}
+
+.lp-node.lp-extra a.lp-link {
+  color: var(--lp-extra-fg);
+}
+
+.lp-inner {
+  display: block;
+  text-align: center;
+  font-size: 0.7rem;
+  line-height: 1.15;
+}
+
+.lp-node.lp-main .lp-inner {
+  font-size: 0.78rem;
+}
+
+@media (max-width: 640px) {
+  .lp-wrap {
+    height: auto !important;
+    max-width: 100% !important;
+  }
+
+  .lp-line {
+    display: none;
+  }
+
+  .lp-session {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 0 12px 18px;
+    margin-bottom: 8px;
+    border-left: 3px dashed var(--lp-line);
+  }
+
+  .lp-node {
+    position: static !important;
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+    border-radius: 12px;
+    padding: 8px 14px;
+    box-shadow: none;
+  }
+
+  .lp-node a.lp-link {
+    width: auto;
+    height: auto;
+  }
+
+  .lp-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+  }
+
+  .lp-inner br {
+    display: none;
+  }
+
+  .lp-node.lp-extra {
+    margin-left: 24px;
+    opacity: 0.9;
+  }
+}

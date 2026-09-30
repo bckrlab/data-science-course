@@ -13,6 +13,8 @@ project:
       ref: main
   bibliography:
     - references.bib
+  plugins:
+    - plugins/learning-path.mjs
   exports:
     - format: pdf
       template: plain_latex_book
@@ -70,4 +72,5 @@ site:
     favicon: favicon.ico
     logo: logo.png
     folders: true
+    style: ./styles/learning-path.css
   template: book-theme

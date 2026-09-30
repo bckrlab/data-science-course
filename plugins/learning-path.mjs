@@ -1,0 +1,188 @@
+// MyST directive plugin: renders the Duolingo-style session learning path
+// on the landing page, driven by chapters/learning-path.json.
+//
+// A build-time directive (not raw HTML in index.md) is required because
+// mystmd doesn't reliably support embedded <script>/HTML in markdown
+// sources — see the decisions log in CONTEXT.md.
+//
+// Constraints on the raw HTML this directive emits (verified empirically
+// against mystmd 1.11's render pipeline, which sanitizes/reprocesses
+// `{type: 'html'}` node content rather than passing it through verbatim):
+//   - Only <div>, <span> and <a> survive. <section>, <style> and <svg> are
+//     stripped (or, for <section>, silently downgraded to <p>).
+//   - <div>/<span> keep arbitrary `style`/`class` attributes, so all layout
+//     (absolute positioning, line segments) is done via inline styles on
+//     divs, with cosmetics in an external stylesheet (site.options.style)
+//     since <style> blocks don't survive.
+//   - <a> loses any inline `style` attribute (class is kept and merged with
+//     mystmd's own auto-added "link" class), and an <a> with more than one
+//     *element* child gets split into one <a> per child. So every link here
+//     wraps exactly one child element.
+//   - Internal-looking hrefs (relative, no leading slash) are resolved and
+//     BASE_URL-prefixed by mystmd itself, same as native TOC links.
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const DATA_FILE = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '..',
+  'chapters',
+  'learning-path.json',
+);
+
+// Layout constants (px). The main line follows a sine wave through session
+// nodes; extras branch to the right of their session's main node.
+const AMPLITUDE = 100;
+const PERIOD = 6; // sessions per full wave cycle
+const CENTER_X = 230;
+const ROW_HEIGHT = 180;
+const TOP_PAD = 90;
+const EXTRA_GAP_X = 140;
+const EXTRA_Y_STAGGER = 36;
+const MARGIN = 40;
+const CURVE_SAMPLES = 8; // straight segments used to approximate each curve
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// chapters/exercise_03/pca-dimensionality-reduction.ipynb
+//   -> chapters/exercise-03/pca-dimensionality-reduction
+function fileToHref(file) {
+  const slug = file
+    .replace(/^chapters\//, '')
+    .replace(/\.ipynb$/, '')
+    .split('/')
+    .map((part) => part.replace(/_/g, '-').toLowerCase())
+    .join('/');
+  return `chapters/${slug}`;
+}
+
+function mainCenter(sessionIndex) {
+  const offsetX = AMPLITUDE * Math.sin((2 * Math.PI * sessionIndex) / PERIOD);
+  return {
+    x: CENTER_X + offsetX,
+    y: TOP_PAD + sessionIndex * ROW_HEIGHT,
+  };
+}
+
+function cubicBezierPoint(p0, p1, p2, p3, t) {
+  const mt = 1 - t;
+  return {
+    x: mt ** 3 * p0.x + 3 * mt ** 2 * t * p1.x + 3 * mt * t ** 2 * p2.x + t ** 3 * p3.x,
+    y: mt ** 3 * p0.y + 3 * mt ** 2 * t * p1.y + 3 * mt * t ** 2 * p2.y + t ** 3 * p3.y,
+  };
+}
+
+// A straight dashed <div> rotated/stretched between two points — the only
+// way to draw a line here, since <svg> doesn't survive the render pipeline.
+function lineSegmentHtml(p1, p2, extraClass = '') {
+  const dx = p2.x - p1.x;
+  const dy = p2.y - p1.y;
+  const length = Math.sqrt(dx * dx + dy * dy);
+  const angleDeg = (Math.atan2(dy, dx) * 180) / Math.PI;
+  return (
+    `<div class="lp-line ${extraClass}" style="left:${p1.x}px;top:${p1.y}px;` +
+    `width:${length}px;transform:rotate(${angleDeg}deg);"></div>`
+  );
+}
+
+function curveSegmentsHtml(prev, curr) {
+  const midY = (prev.y + curr.y) / 2;
+  const control1 = { x: prev.x, y: midY };
+  const control2 = { x: curr.x, y: midY };
+  const points = [];
+  for (let s = 0; s <= CURVE_SAMPLES; s += 1) {
+    points.push(cubicBezierPoint(prev, control1, control2, curr, s / CURVE_SAMPLES));
+  }
+  const segments = [];
+  for (let s = 1; s < points.length; s += 1) {
+    segments.push(lineSegmentHtml(points[s - 1], points[s], 'lp-mainline'));
+  }
+  return segments.join('');
+}
+
+function nodeHtml(subtopic, x, y) {
+  const roleClass = subtopic.role === 'main' ? 'lp-main' : 'lp-extra';
+  return (
+    `<div class="lp-node ${roleClass}" style="left:${x}px;top:${y}px;">` +
+    `<a class="lp-link" href="${escapeHtml(fileToHref(subtopic.file))}">` +
+    `<span class="lp-inner">${subtopic.emoji}<br/>${escapeHtml(subtopic.title)}</span>` +
+    `</a></div>`
+  );
+}
+
+function buildLearningPathHtml() {
+  const { sessions } = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+
+  const maxExtras = Math.max(0, ...sessions.map((s) => s.subtopics.length - 1));
+  const width = Math.round(CENTER_X + AMPLITUDE + (maxExtras + 1) * EXTRA_GAP_X + MARGIN);
+  const height = Math.round(TOP_PAD * 2 + (sessions.length - 1) * ROW_HEIGHT);
+
+  const mainPoints = sessions.map((_, i) => mainCenter(i));
+
+  let mainLineHtml = '';
+  for (let i = 1; i < mainPoints.length; i += 1) {
+    mainLineHtml += curveSegmentsHtml(mainPoints[i - 1], mainPoints[i]);
+  }
+
+  const sessionsHtml = sessions
+    .map((session, sessionIndex) => {
+      const main = mainCenter(sessionIndex);
+      const extras = session.subtopics.filter((s) => s.role === 'extra');
+      const mains = session.subtopics.filter((s) => s.role === 'main');
+      if (mains.length !== 1) {
+        throw new Error(
+          `learning-path.json: session ${session.number} has ${mains.length} ` +
+            "subtopics with role 'main' (expected exactly 1)",
+        );
+      }
+      const [mainSubtopic] = mains;
+
+      let branchesHtml = '';
+      const extraNodesHtml = extras
+        .map((extra, j) => {
+          const x = main.x + (j + 1) * EXTRA_GAP_X;
+          const y = main.y + (j % 2 === 0 ? -EXTRA_Y_STAGGER : EXTRA_Y_STAGGER);
+          branchesHtml += lineSegmentHtml(main, { x, y }, 'lp-branch');
+          return nodeHtml(extra, x, y);
+        })
+        .join('');
+
+      return (
+        `<div class="lp-session">${branchesHtml}${nodeHtml(mainSubtopic, main.x, main.y)}${extraNodesHtml}</div>`
+      );
+    })
+    .join('');
+
+  return (
+    `<div class="lp-wrap" style="max-width:${width}px;height:${height}px;">` +
+    `${mainLineHtml}${sessionsHtml}</div>`
+  );
+}
+
+const learningPathDirective = {
+  name: 'learning-path',
+  doc: 'Renders the Duolingo-style session learning path, driven by chapters/learning-path.json.',
+  run() {
+    return [{ type: 'html', value: buildLearningPathHtml() }];
+  },
+};
+
+/** @type {import('myst-common').MystPlugin} */
+const plugin = {
+  name: 'Learning Path',
+  author: 'bckrlab',
+  license: 'MIT',
+  directives: [learningPathDirective],
+  roles: [],
+  transforms: [],
+};
+
+export default plugin;
