@@ -33,6 +33,15 @@
   border-top-width: 3px;
 }
 
+/* An unrevealed session emits an empty <div class="lp-session"></div> (see
+   plugins/learning-path.mjs) so the path continues past it unlabeled. Hide
+   it explicitly rather than relying on it having no content, since the
+   mobile rules below give .lp-session its own border/padding/spacing that
+   would otherwise render it as a visible empty stub. */
+.lp-session:empty {
+  display: none;
+}
+
 .lp-node {
   position: absolute;
   transform: translate(-50%, -50%);

@@ -137,6 +137,12 @@ function layoutSession(session, sessionIndex) {
         "subtopics with role 'main' (expected exactly 1)",
     );
   }
+  if (typeof session.revealed !== 'boolean') {
+    throw new Error(
+      `learning-path.json: session ${session.number}'s "revealed" must be a ` +
+        `JSON boolean, got ${JSON.stringify(session.revealed)}`,
+    );
+  }
 
   let leftCount = 0;
   let rightCount = 0;
@@ -148,16 +154,22 @@ function layoutSession(session, sessionIndex) {
     return { subtopic: extra, x, y };
   });
 
-  return { revealed: session.revealed, mainSubtopic: mains[0], main, extraPositions };
+  return { mainSubtopic: mains[0], main, extraPositions };
 }
 
 function buildLearningPathHtml() {
   const { sessions } = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
   const layouts = sessions.map(layoutSession);
 
-  // Shift everything so the leftmost node's edge sits at MARGIN, centering
-  // the whole (possibly asymmetric) path within its container.
-  const allX = layouts.flatMap((l) => [l.main.x, ...l.extraPositions.map((p) => p.x)]);
+  // Shift everything so the leftmost *rendered* node's edge sits at MARGIN,
+  // centering the visible path within its container. An unrevealed
+  // session's main point still counts (the line passes through it), but its
+  // extras don't — they're never rendered, so they mustn't widen/off-center
+  // the container.
+  const allX = layouts.flatMap((l, i) => [
+    l.main.x,
+    ...(sessions[i].revealed ? l.extraPositions.map((p) => p.x) : []),
+  ]);
   const nodeHalfMax = Math.max(NODE_MAIN, NODE_EXTRA) / 2;
   const shift = MARGIN + nodeHalfMax - Math.min(...allX);
   const width = Math.round(Math.max(...allX) + shift + nodeHalfMax + MARGIN);
@@ -174,8 +186,8 @@ function buildLearningPathHtml() {
   // session, so the dashed line passes through its row as a blank,
   // unlabeled segment instead of stopping short or leaving a gap.
   const sessionsHtml = layouts
-    .map((layout) => {
-      if (!layout.revealed) {
+    .map((layout, i) => {
+      if (!sessions[i].revealed) {
         return '<div class="lp-session"></div>';
       }
 
