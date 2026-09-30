@@ -17,7 +17,8 @@
 //   - <a> loses any inline `style` attribute (class is kept and merged with
 //     mystmd's own auto-added "link" class), and an <a> with more than one
 //     *element* child gets split into one <a> per child. So every link here
-//     wraps exactly one child element.
+//     wraps exactly one child element (nesting further inside that one
+//     child, e.g. two spans under a single wrapping span, is fine).
 //   - Internal-looking hrefs (relative, no leading slash) are resolved and
 //     BASE_URL-prefixed by mystmd itself, same as native TOC links.
 
@@ -33,15 +34,19 @@ const DATA_FILE = path.join(
 );
 
 // Layout constants (px). The main line follows a sine wave through session
-// nodes; extras branch to the right of their session's main node.
+// nodes; extras branch left/right off their session's main node, alternating
+// so the path doesn't lean to one side. NODE_MAIN/NODE_EXTRA must match the
+// square sizes in styles/learning-path.css — they're only used here to keep
+// nodes from clipping the container edge.
 const AMPLITUDE = 100;
 const PERIOD = 6; // sessions per full wave cycle
-const CENTER_X = 230;
 const ROW_HEIGHT = 180;
 const TOP_PAD = 90;
 const EXTRA_GAP_X = 140;
 const EXTRA_Y_STAGGER = 36;
 const MARGIN = 40;
+const NODE_MAIN = 90;
+const NODE_EXTRA = 74;
 const CURVE_SAMPLES = 8; // straight segments used to approximate each curve
 
 function escapeHtml(value) {
@@ -64,12 +69,11 @@ function fileToHref(file) {
   return `chapters/${slug}`;
 }
 
-function mainCenter(sessionIndex) {
+// Main line offset around x=0; shifted to a positive, centered coordinate
+// system once the full layout (including branches) is known.
+function mainOffset(sessionIndex) {
   const offsetX = AMPLITUDE * Math.sin((2 * Math.PI * sessionIndex) / PERIOD);
-  return {
-    x: CENTER_X + offsetX,
-    y: TOP_PAD + sessionIndex * ROW_HEIGHT,
-  };
+  return { x: offsetX, y: TOP_PAD + sessionIndex * ROW_HEIGHT };
 }
 
 function cubicBezierPoint(p0, p1, p2, p3, t) {
@@ -113,50 +117,73 @@ function nodeHtml(subtopic, x, y) {
   return (
     `<div class="lp-node ${roleClass}" style="left:${x}px;top:${y}px;">` +
     `<a class="lp-link" href="${escapeHtml(fileToHref(subtopic.file))}">` +
-    `<span class="lp-inner">${subtopic.emoji}<br/>${escapeHtml(subtopic.title)}</span>` +
-    `</a></div>`
+    `<span class="lp-inner">` +
+    `<span class="lp-emoji">${subtopic.emoji}</span>` +
+    `<span class="lp-text">${escapeHtml(subtopic.title)}</span>` +
+    `</span></a></div>`
   );
+}
+
+// Lay out one session's main node plus its extras (unshifted x). Extras
+// alternate left/right, starting side depending on session+extra index, so
+// consecutive branches and multi-extra sessions don't all lean the same way.
+function layoutSession(session, sessionIndex) {
+  const main = mainOffset(sessionIndex);
+  const extras = session.subtopics.filter((s) => s.role === 'extra');
+  const mains = session.subtopics.filter((s) => s.role === 'main');
+  if (mains.length !== 1) {
+    throw new Error(
+      `learning-path.json: session ${session.number} has ${mains.length} ` +
+        "subtopics with role 'main' (expected exactly 1)",
+    );
+  }
+
+  let leftCount = 0;
+  let rightCount = 0;
+  const extraPositions = extras.map((extra, j) => {
+    const goRight = (sessionIndex + j) % 2 === 0;
+    const dist = goRight ? (rightCount += 1) : (leftCount += 1);
+    const x = main.x + (goRight ? 1 : -1) * dist * EXTRA_GAP_X;
+    const y = main.y + (j % 2 === 0 ? -EXTRA_Y_STAGGER : EXTRA_Y_STAGGER);
+    return { subtopic: extra, x, y };
+  });
+
+  return { mainSubtopic: mains[0], main, extraPositions };
 }
 
 function buildLearningPathHtml() {
   const { sessions } = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+  const layouts = sessions.map(layoutSession);
 
-  const maxExtras = Math.max(0, ...sessions.map((s) => s.subtopics.length - 1));
-  const width = Math.round(CENTER_X + AMPLITUDE + (maxExtras + 1) * EXTRA_GAP_X + MARGIN);
+  // Shift everything so the leftmost node's edge sits at MARGIN, centering
+  // the whole (possibly asymmetric) path within its container.
+  const allX = layouts.flatMap((l) => [l.main.x, ...l.extraPositions.map((p) => p.x)]);
+  const nodeHalfMax = Math.max(NODE_MAIN, NODE_EXTRA) / 2;
+  const shift = MARGIN + nodeHalfMax - Math.min(...allX);
+  const width = Math.round(Math.max(...allX) + shift + nodeHalfMax + MARGIN);
   const height = Math.round(TOP_PAD * 2 + (sessions.length - 1) * ROW_HEIGHT);
 
-  const mainPoints = sessions.map((_, i) => mainCenter(i));
-
+  const mainPoints = layouts.map((l) => ({ x: l.main.x + shift, y: l.main.y }));
   let mainLineHtml = '';
   for (let i = 1; i < mainPoints.length; i += 1) {
     mainLineHtml += curveSegmentsHtml(mainPoints[i - 1], mainPoints[i]);
   }
 
-  const sessionsHtml = sessions
-    .map((session, sessionIndex) => {
-      const main = mainCenter(sessionIndex);
-      const extras = session.subtopics.filter((s) => s.role === 'extra');
-      const mains = session.subtopics.filter((s) => s.role === 'main');
-      if (mains.length !== 1) {
-        throw new Error(
-          `learning-path.json: session ${session.number} has ${mains.length} ` +
-            "subtopics with role 'main' (expected exactly 1)",
-        );
-      }
-      const [mainSubtopic] = mains;
-
+  const sessionsHtml = layouts
+    .map((layout) => {
+      const main = { x: layout.main.x + shift, y: layout.main.y };
       let branchesHtml = '';
-      const extraNodesHtml = extras
-        .map((extra, j) => {
-          const x = main.x + (j + 1) * EXTRA_GAP_X;
-          const y = main.y + (j % 2 === 0 ? -EXTRA_Y_STAGGER : EXTRA_Y_STAGGER);
-          branchesHtml += lineSegmentHtml(main, { x, y }, 'lp-branch');
-          return nodeHtml(extra, x, y);
+      const extraNodesHtml = layout.extraPositions
+        .map(({ subtopic, x, y }) => {
+          const shifted = { x: x + shift, y };
+          branchesHtml += lineSegmentHtml(main, shifted, 'lp-branch');
+          return nodeHtml(subtopic, shifted.x, shifted.y);
         })
         .join('');
 
       return (
-        `<div class="lp-session">${branchesHtml}${nodeHtml(mainSubtopic, main.x, main.y)}${extraNodesHtml}</div>`
+        `<div class="lp-session">${branchesHtml}` +
+        `${nodeHtml(layout.mainSubtopic, main.x, main.y)}${extraNodesHtml}</div>`
       );
     })
     .join('');

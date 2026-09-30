@@ -4,6 +4,7 @@
 
 .lp-wrap {
   position: relative;
+  width: 100%;
   margin: 2rem auto;
   --lp-line: #94a3b8;
   --lp-main-bg: #2563eb;
@@ -69,14 +70,35 @@
 }
 
 .lp-inner {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  width: 100%;
+  height: 100%;
   text-align: center;
-  font-size: 0.7rem;
-  line-height: 1.15;
 }
 
-.lp-node.lp-main .lp-inner {
-  font-size: 0.78rem;
+.lp-emoji {
+  line-height: 1;
+}
+
+.lp-text {
+  font-size: 0.6rem;
+  line-height: 1.1;
+}
+
+.lp-node.lp-main .lp-emoji {
+  font-size: 2.75rem;
+}
+
+.lp-node.lp-extra .lp-emoji {
+  font-size: 2.2rem;
+}
+
+.lp-node.lp-main .lp-text {
+  font-size: 0.65rem;
 }
 
 @media (max-width: 640px) {
@@ -116,15 +138,18 @@
   }
 
   .lp-inner {
-    display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: flex-start;
     gap: 8px;
-    font-size: 0.95rem;
   }
 
-  .lp-inner br {
-    display: none;
+  .lp-node.lp-main .lp-emoji,
+  .lp-node.lp-extra .lp-emoji {
+    font-size: 1.4rem;
+  }
+
+  .lp-text {
+    font-size: 0.95rem;
   }
 
   .lp-node.lp-extra {
