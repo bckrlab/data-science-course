@@ -49,6 +49,14 @@ const NODE_MAIN = 90;
 const NODE_EXTRA = 74;
 const CURVE_SAMPLES = 8; // straight segments used to approximate each curve
 
+// Trailing "more to come" cloud, shown after the last revealed session's
+// main node whenever any session isn't revealed yet. CLOUD_WIDTH/HEIGHT
+// must match the .lp-cloud box in styles/learning-path.css — they're used
+// here only to keep the cloud from clipping the container edge.
+const CLOUD_WIDTH = 140;
+const CLOUD_HEIGHT = 90;
+const CLOUD_GAP_Y = 110; // vertical distance from the last revealed main node to the cloud's center
+
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -112,6 +120,20 @@ function curveSegmentsHtml(prev, curr) {
   return segments.join('');
 }
 
+// Pure-CSS cumulus blob (a body plus a few overlapping circular puffs) — no
+// per-call geometry beyond the one translate, since <svg> doesn't survive
+// the render pipeline. Shape/sizing lives in styles/learning-path.css.
+function cloudHtml(x, y) {
+  return (
+    `<div class="lp-cloud" style="left:${x}px;top:${y}px;">` +
+    `<div class="lp-cloud-puff lp-cloud-puff-1"></div>` +
+    `<div class="lp-cloud-puff lp-cloud-puff-2"></div>` +
+    `<div class="lp-cloud-puff lp-cloud-puff-3"></div>` +
+    `<div class="lp-cloud-body"></div>` +
+    `</div>`
+  );
+}
+
 function nodeHtml(subtopic, x, y) {
   const roleClass = subtopic.role === 'main' ? 'lp-main' : 'lp-extra';
   return (
@@ -161,33 +183,61 @@ function buildLearningPathHtml() {
   const { sessions } = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
   const layouts = sessions.map(layoutSession);
 
+  // Once every session for the year is revealed, the path just ends at the
+  // final notebook — no cloud, no trailing line. Until then, it ends in a
+  // CSS-only cloud right after the last revealed session's main node, with
+  // the dashed line disappearing behind it. Everything strictly after that
+  // node (a trailing unrevealed suffix — the only shape reveal takes,
+  // per-session in order) is simply not rendered at all: no row, no
+  // mainline segment. A session hidden earlier in the sequence with later
+  // sessions still revealed (e.g. a one-off manual edit, not the normal
+  // weekly reveal) is unaffected — it still renders as today's blank,
+  // unlabeled row, since it's before the last revealed node.
+  let lastRevealedIndex = -1;
+  for (let i = sessions.length - 1; i >= 0; i -= 1) {
+    if (sessions[i].revealed) {
+      lastRevealedIndex = i;
+      break;
+    }
+  }
+  const hasUnrevealed = sessions.some((s) => !s.revealed);
+  const renderCount = hasUnrevealed ? lastRevealedIndex + 1 : sessions.length;
+  const visibleSessions = sessions.slice(0, renderCount);
+  const visibleLayouts = layouts.slice(0, renderCount);
+
   // Shift everything so the leftmost *rendered* node's edge sits at MARGIN,
   // centering the visible path within its container. An unrevealed
   // session's main point still counts (the line passes through it), but its
   // extras don't — they're never rendered, so they mustn't widen/off-center
-  // the container.
-  const allX = layouts.flatMap((l, i) => [
+  // the container. A trailing unrevealed suffix beyond renderCount doesn't
+  // count at all — its rows aren't rendered, so its geometry doesn't exist.
+  const allX = visibleLayouts.flatMap((l, i) => [
     l.main.x,
-    ...(sessions[i].revealed ? l.extraPositions.map((p) => p.x) : []),
+    ...(visibleSessions[i].revealed ? l.extraPositions.map((p) => p.x) : []),
   ]);
   const nodeHalfMax = Math.max(NODE_MAIN, NODE_EXTRA) / 2;
-  const shift = MARGIN + nodeHalfMax - Math.min(...allX);
-  const width = Math.round(Math.max(...allX) + shift + nodeHalfMax + MARGIN);
-  const height = Math.round(TOP_PAD * 2 + (sessions.length - 1) * ROW_HEIGHT);
+  const edgeHalfMax = Math.max(nodeHalfMax, hasUnrevealed ? CLOUD_WIDTH / 2 : 0);
+  const minX = allX.length ? Math.min(...allX) : 0;
+  const maxX = allX.length ? Math.max(...allX) : 0;
+  const shift = MARGIN + edgeHalfMax - minX;
+  const width = Math.round(maxX + shift + edgeHalfMax + MARGIN);
+  const baseHeight =
+    renderCount > 0 ? TOP_PAD * 2 + (renderCount - 1) * ROW_HEIGHT : TOP_PAD * 2;
+  const height = Math.round(baseHeight + (hasUnrevealed ? CLOUD_GAP_Y + CLOUD_HEIGHT / 2 : 0));
 
-  const mainPoints = layouts.map((l) => ({ x: l.main.x + shift, y: l.main.y }));
+  const mainPoints = visibleLayouts.map((l) => ({ x: l.main.x + shift, y: l.main.y }));
   let mainLineHtml = '';
   for (let i = 1; i < mainPoints.length; i += 1) {
     mainLineHtml += curveSegmentsHtml(mainPoints[i - 1], mainPoints[i]);
   }
 
-  // An unrevealed session renders no node/label/emoji, for itself or its
-  // extras — the main-line points above are still computed for every
-  // session, so the dashed line passes through its row as a blank,
-  // unlabeled segment instead of stopping short or leaving a gap.
-  const sessionsHtml = layouts
+  // An unrevealed session (before the last revealed one) renders no node,
+  // label, emoji, or extras — the main-line points above are still computed
+  // for its row, so the dashed line passes through it as a blank, unlabeled
+  // segment instead of stopping short or leaving a gap.
+  const sessionsHtml = visibleLayouts
     .map((layout, i) => {
-      if (!sessions[i].revealed) {
+      if (!visibleSessions[i].revealed) {
         return '<div class="lp-session"></div>';
       }
 
@@ -208,9 +258,25 @@ function buildLearningPathHtml() {
     })
     .join('');
 
+  // The cloud is appended to the HTML *after* the line segment leading into
+  // it, so later DOM paint order draws the cloud over the line's tail end —
+  // that's what makes the line "disappear behind" the cloud, no z-index
+  // needed.
+  let cloudBlockHtml = '';
+  if (hasUnrevealed) {
+    const lastPoint = mainPoints.length > 0 ? mainPoints[mainPoints.length - 1] : null;
+    const cloudCenter = lastPoint
+      ? { x: lastPoint.x, y: lastPoint.y + CLOUD_GAP_Y }
+      : { x: shift, y: TOP_PAD };
+    if (lastPoint) {
+      mainLineHtml += lineSegmentHtml(lastPoint, cloudCenter, 'lp-mainline');
+    }
+    cloudBlockHtml = cloudHtml(cloudCenter.x, cloudCenter.y);
+  }
+
   return (
     `<div class="lp-wrap" style="max-width:${width}px;height:${height}px;">` +
-    `${mainLineHtml}${sessionsHtml}</div>`
+    `${mainLineHtml}${sessionsHtml}${cloudBlockHtml}</div>`
   );
 }
 
