@@ -53,9 +53,9 @@ const CURVE_SAMPLES = 8; // straight segments used to approximate each curve
 // main node whenever any session isn't revealed yet. CLOUD_WIDTH/HEIGHT
 // must match the .lp-cloud box in styles/learning-path.css — they're used
 // here only to keep the cloud from clipping the container edge.
-const CLOUD_WIDTH = 140;
-const CLOUD_HEIGHT = 90;
-const CLOUD_GAP_Y = 110; // vertical distance from the last revealed main node to the cloud's center
+const CLOUD_WIDTH = 420;
+const CLOUD_HEIGHT = 270;
+const CLOUD_GAP_Y = 330; // vertical distance from the last revealed main node to the cloud's center
 
 function escapeHtml(value) {
   return String(value)

@@ -54,14 +54,14 @@
 /* Trailing "more to come" cloud (see plugins/learning-path.mjs), shown
    whenever a session hasn't revealed yet. Built from a rounded-rectangle
    body plus three overlapping circular puffs — no image/SVG asset, since
-   <svg> doesn't survive mystmd's HTML sanitizer. Its box (140x90) must
+   <svg> doesn't survive mystmd's HTML sanitizer. Its box (420x270) must
    match CLOUD_WIDTH/CLOUD_HEIGHT in the plugin, which uses those only to
    keep the shape from clipping the container edge. */
 .lp-cloud {
   position: absolute;
   transform: translate(-50%, -50%);
-  width: 140px;
-  height: 90px;
+  width: 420px;
+  height: 270px;
   pointer-events: none;
 }
 
@@ -72,34 +72,34 @@
 }
 
 .lp-cloud-body {
-  left: 10px;
-  top: 40px;
-  width: 120px;
-  height: 44px;
-  border-radius: 22px;
+  left: 30px;
+  top: 120px;
+  width: 360px;
+  height: 132px;
+  border-radius: 66px;
 }
 
 .lp-cloud-puff-1 {
-  left: 14px;
-  top: 18px;
-  width: 54px;
-  height: 54px;
+  left: 42px;
+  top: 54px;
+  width: 162px;
+  height: 162px;
   border-radius: 50%;
 }
 
 .lp-cloud-puff-2 {
-  left: 48px;
+  left: 144px;
   top: 0;
-  width: 68px;
-  height: 68px;
+  width: 204px;
+  height: 204px;
   border-radius: 50%;
 }
 
 .lp-cloud-puff-3 {
-  left: 96px;
-  top: 22px;
-  width: 48px;
-  height: 48px;
+  left: 288px;
+  top: 66px;
+  width: 144px;
+  height: 144px;
   border-radius: 50%;
 }
 
@@ -235,36 +235,36 @@
     top: 0 !important;
     left: 0 !important;
     transform: none !important;
-    width: 100px !important;
-    height: 64px !important;
+    width: 300px !important;
+    height: 192px !important;
     margin: 4px 0 12px 18px;
   }
 
   .lp-cloud-body {
-    left: 4px;
-    top: 28px;
-    width: 90px;
-    height: 30px;
+    left: 12px;
+    top: 84px;
+    width: 270px;
+    height: 90px;
   }
 
   .lp-cloud-puff-1 {
-    left: 6px;
-    top: 10px;
-    width: 36px;
-    height: 36px;
+    left: 18px;
+    top: 30px;
+    width: 108px;
+    height: 108px;
   }
 
   .lp-cloud-puff-2 {
-    left: 32px;
+    left: 96px;
     top: 0;
-    width: 46px;
-    height: 46px;
+    width: 138px;
+    height: 138px;
   }
 
   .lp-cloud-puff-3 {
-    left: 66px;
-    top: 12px;
-    width: 32px;
-    height: 32px;
+    left: 198px;
+    top: 36px;
+    width: 96px;
+    height: 96px;
   }
 }
