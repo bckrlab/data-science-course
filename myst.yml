@@ -26,7 +26,9 @@ project:
             - file: chapters/exercise_01/intro-to-python_tasks.ipynb
             - file: chapters/exercise_01/intro-to-python_tutorial.ipynb
             - file: chapters/exercise_01/CURVE.ipynb
-        - file: chapters/exercise_02.ipynb
+        - title: Exercise 02
+          children:
+            - file: chapters/exercise_02.ipynb
         - title: Exercise 03
           children:
             - file: chapters/exercise_03/pca-dimensionality-reduction.ipynb
@@ -48,12 +50,16 @@ project:
           children:
             - file: chapters/exercise_07/mlp-foundations.ipynb
             - file: chapters/exercise_07/mlp-implementation-and-cnn.ipynb
-        - file: chapters/exercise_08.ipynb
+        - title: Exercise 08
+          children:
+            - file: chapters/exercise_08.ipynb
         - title: Exercise 09
           children:
             - file: chapters/exercise_09/full-factorial-and-lhs-design.ipynb
             - file: chapters/exercise_09/tplhd-optimized-lhs.ipynb
-        - file: chapters/exercise_10.ipynb
+        - title: Exercise 10
+          children:
+            - file: chapters/exercise_10.ipynb
         - title: Exercise 11
           children:
             - file: chapters/exercise_11/decision-tree-classifier-fitting.ipynb
