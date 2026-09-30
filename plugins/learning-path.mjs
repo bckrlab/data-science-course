@@ -148,7 +148,7 @@ function layoutSession(session, sessionIndex) {
     return { subtopic: extra, x, y };
   });
 
-  return { mainSubtopic: mains[0], main, extraPositions };
+  return { revealed: session.revealed, mainSubtopic: mains[0], main, extraPositions };
 }
 
 function buildLearningPathHtml() {
@@ -169,8 +169,16 @@ function buildLearningPathHtml() {
     mainLineHtml += curveSegmentsHtml(mainPoints[i - 1], mainPoints[i]);
   }
 
+  // An unrevealed session renders no node/label/emoji, for itself or its
+  // extras — the main-line points above are still computed for every
+  // session, so the dashed line passes through its row as a blank,
+  // unlabeled segment instead of stopping short or leaving a gap.
   const sessionsHtml = layouts
     .map((layout) => {
+      if (!layout.revealed) {
+        return '<div class="lp-session"></div>';
+      }
+
       const main = { x: layout.main.x + shift, y: layout.main.y };
       let branchesHtml = '';
       const extraNodesHtml = layout.extraPositions
