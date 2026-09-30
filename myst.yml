@@ -26,26 +26,6 @@ project:
         - file: chapters/exercise_01/intro-to-python_tasks.ipynb
         - file: chapters/exercise_01/intro-to-python_tutorial.ipynb
         - file: chapters/exercise_01/CURVE.ipynb
-    - title: Exercise 02
-      children:
-        - file: chapters/exercise_02.ipynb
-    - title: Exercise 03
-      children:
-        - file: chapters/exercise_03/pca-dimensionality-reduction.ipynb
-        - file: chapters/exercise_03/kmeans-clustering.ipynb
-    - title: Exercise 04
-      children:
-        - file: chapters/exercise_04/evaluation-metrics.ipynb
-        - file: chapters/exercise_04/holdout-cross-validation.ipynb
-        - file: chapters/exercise_04/reference-values-and-imbalance.ipynb
-    - title: Exercise 05
-      children:
-        - file: chapters/exercise_05/linear-regression-basics.ipynb
-        - file: chapters/exercise_05/ols-projection-geometry.ipynb
-    - title: Exercise 06
-      children:
-        - file: chapters/exercise_06/regularization-ridge-lasso.ipynb
-        - file: chapters/exercise_06/linear-vs-logistic-classification.ipynb
 site:
   options:
     favicon: favicon.ico

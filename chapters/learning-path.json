@@ -13,7 +13,7 @@
     {
       "number": "02",
       "title": "Learning from Data",
-      "revealed": true,
+      "revealed": false,
       "subtopics": [
         { "title": "Learning from Data", "emoji": "🎯", "role": "main", "file": "chapters/exercise_02.ipynb" }
       ]
@@ -21,7 +21,7 @@
     {
       "number": "03",
       "title": "PCA & Clustering",
-      "revealed": true,
+      "revealed": false,
       "subtopics": [
         { "title": "PCA", "emoji": "📊", "role": "main", "file": "chapters/exercise_03/pca-dimensionality-reduction.ipynb" },
         { "title": "K-Means", "emoji": "🧲", "role": "extra", "file": "chapters/exercise_03/kmeans-clustering.ipynb" }
@@ -30,7 +30,7 @@
     {
       "number": "04",
       "title": "Evaluation",
-      "revealed": true,
+      "revealed": false,
       "subtopics": [
         { "title": "Metrics", "emoji": "📏", "role": "main", "file": "chapters/exercise_04/evaluation-metrics.ipynb" },
         { "title": "Holdout & CV", "emoji": "🔁", "role": "extra", "file": "chapters/exercise_04/holdout-cross-validation.ipynb" },
@@ -40,7 +40,7 @@
     {
       "number": "05",
       "title": "Linear Regression",
-      "revealed": true,
+      "revealed": false,
       "subtopics": [
         { "title": "Regression Basics", "emoji": "📈", "role": "main", "file": "chapters/exercise_05/linear-regression-basics.ipynb" },
         { "title": "OLS & Projections", "emoji": "📐", "role": "extra", "file": "chapters/exercise_05/ols-projection-geometry.ipynb" }
@@ -49,7 +49,7 @@
     {
       "number": "06",
       "title": "Regularization & Classification",
-      "revealed": true,
+      "revealed": false,
       "subtopics": [
         { "title": "Ridge & Lasso", "emoji": "🪢", "role": "main", "file": "chapters/exercise_06/regularization-ridge-lasso.ipynb" },
         { "title": "Linear vs Logistic", "emoji": "🔀", "role": "extra", "file": "chapters/exercise_06/linear-vs-logistic-classification.ipynb" }
@@ -58,7 +58,7 @@
     {
       "number": "07",
       "title": "MLPs & CNNs",
-      "revealed": true,
+      "revealed": false,
       "subtopics": [
         { "title": "MLP Foundations", "emoji": "🧠", "role": "main", "file": "chapters/exercise_07/mlp-foundations.ipynb" },
         { "title": "MLP Implementation & CNN", "emoji": "🤖", "role": "extra", "file": "chapters/exercise_07/mlp-implementation-and-cnn.ipynb" }
@@ -67,7 +67,7 @@
     {
       "number": "08",
       "title": "Continuous Time Markov Chains",
-      "revealed": true,
+      "revealed": false,
       "subtopics": [
         { "title": "Markov Chains", "emoji": "🔗", "role": "main", "file": "chapters/exercise_08.ipynb" }
       ]
@@ -75,7 +75,7 @@
     {
       "number": "09",
       "title": "Experiment Design",
-      "revealed": true,
+      "revealed": false,
       "subtopics": [
         { "title": "Full Factorial & LHS", "emoji": "🎲", "role": "main", "file": "chapters/exercise_09/full-factorial-and-lhs-design.ipynb" },
         { "title": "TPLHD", "emoji": "🧩", "role": "extra", "file": "chapters/exercise_09/tplhd-optimized-lhs.ipynb" }
@@ -84,7 +84,7 @@
     {
       "number": "10",
       "title": "Bayesian Inference",
-      "revealed": true,
+      "revealed": false,
       "subtopics": [
         { "title": "Approximate Bayesian Inference", "emoji": "🔮", "role": "main", "file": "chapters/exercise_10.ipynb" }
       ]
@@ -92,7 +92,7 @@
     {
       "number": "11",
       "title": "Decision Trees",
-      "revealed": true,
+      "revealed": false,
       "subtopics": [
         { "title": "Classifier Fitting", "emoji": "🌳", "role": "main", "file": "chapters/exercise_11/decision-tree-classifier-fitting.ipynb" },
         { "title": "Manual Tree", "emoji": "✍️", "role": "extra", "file": "chapters/exercise_11/manual-decision-tree.ipynb" },
