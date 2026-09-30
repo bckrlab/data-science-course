@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 LEARNING_PATH = ROOT / "chapters" / "learning-path.json"
 MYST_YML = ROOT / "myst.yml"
 
-TITLEPAGE_MARKER = "    - file: chapters/titlepage.ipynb\n      children:\n"
+INDEX_MARKER = "    - file: index.md\n"
 
 # A JSON string: any run of non-quote/non-backslash chars, or a backslash
 # escape (\" included), repeated -- so an escaped quote in a title can't
@@ -57,17 +57,17 @@ def build_learning_path_text(cutoff, total):
 
 def toc_block(session):
     lines = [
-        f'        - title: Exercise {session["number"]}',
-        "          children:",
+        f'    - title: Exercise {session["number"]}',
+        "      children:",
     ]
     for subtopic in session["subtopics"]:
-        lines.append(f'            - file: {subtopic["file"]}')
+        lines.append(f'        - file: {subtopic["file"]}')
     return "\n".join(lines)
 
 
 def build_myst_yml_text(sessions, cutoff):
     text = MYST_YML.read_text()
-    start = text.index(TITLEPAGE_MARKER) + len(TITLEPAGE_MARKER)
+    start = text.index(INDEX_MARKER) + len(INDEX_MARKER)
     end = text.index("site:\n", start)
 
     revealed = [s for s in sessions if int(s["number"]) <= cutoff]
