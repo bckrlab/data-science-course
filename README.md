@@ -27,6 +27,22 @@ rm -rf .venv
 uv sync -p 3.12
 ```
 
+### Revealing the next session
+
+The deployed book ships sessions progressively as the live course
+progresses, one session at a time. To reveal sessions 1 through N (main
+notebook + all extras), run:
+
+```
+uv run scripts/reveal.py N
+```
+
+This rewrites both `chapters/learning-path.json` (per-session visibility
+on the landing page) and `myst.yml` (the `toc`, which controls what
+mystmd actually builds) to match. Commit the result, and use
+`uv run jupyter book start` to preview exactly what will be deployed
+before pushing. Running the script again with the same N is a no-op.
+
 ## Credits
 
 This project is created using the excellent open source [Jupyter Book project](https://jupyterbook.org/).
