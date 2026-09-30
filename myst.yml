@@ -49,7 +49,10 @@ project:
             - file: chapters/exercise_07/mlp-foundations.ipynb
             - file: chapters/exercise_07/mlp-implementation-and-cnn.ipynb
         - file: chapters/exercise_08.ipynb
-        - file: chapters/exercise_09.ipynb
+        - title: Exercise 09
+          children:
+            - file: chapters/exercise_09/full-factorial-and-lhs-design.ipynb
+            - file: chapters/exercise_09/tplhd-optimized-lhs.ipynb
         - file: chapters/exercise_10.ipynb
         - file: chapters/exercise_11.ipynb
 site:
