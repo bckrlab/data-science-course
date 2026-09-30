@@ -221,9 +221,19 @@
   }
 
   /* The cloud follows the stacked list statically, like .lp-node above,
-     instead of keeping its absolutely-positioned desktop coordinates. */
+     instead of keeping its absolutely-positioned desktop coordinates.
+     Stays `relative` (not `static`) because its puff/body children are
+     `position: absolute` (shared with desktop) and need *this* box as
+     their containing block -- `static` here would make them escape to
+     .lp-wrap instead, pinning them near the top of the whole path.
+     top/left must be reset too: the element still carries its inline
+     desktop `style="left:...;top:...;"`, which `position: static` was
+     ignoring outright but `relative` would otherwise honor as an offset
+     from its normal flow position. */
   .lp-cloud {
-    position: static !important;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
     transform: none !important;
     width: 100px !important;
     height: 64px !important;
