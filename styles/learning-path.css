@@ -11,7 +11,8 @@
   --lp-main-fg: #ffffff;
   --lp-extra-bg: #eef2ff;
   --lp-extra-fg: #1e293b;
-  --lp-cloud-bg: #cbd5e1;
+  --lp-inactive-bg: #e2e8f0;
+  --lp-inactive-fg: #94a3b8;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,7 +20,8 @@
     --lp-line: #64748b;
     --lp-extra-bg: #1e293b;
     --lp-extra-fg: #e2e8f0;
-    --lp-cloud-bg: #475569;
+    --lp-inactive-bg: #334155;
+    --lp-inactive-fg: #64748b;
   }
 }
 
@@ -35,13 +37,10 @@
   border-top-width: 3px;
 }
 
-/* An unrevealed session emits an empty <div class="lp-session"></div> (see
-   plugins/learning-path.mjs) so the path continues past it unlabeled. Hide
-   it explicitly rather than relying on it having no content, since the
-   mobile rules below give .lp-session its own border/padding/spacing that
-   would otherwise render it as a visible empty stub. */
-.lp-session:empty {
-  display: none;
+/* Branch line to an unrevealed extra node (see plugins/learning-path.mjs) —
+   dimmed to match the .lp-inactive node it leads to. */
+.lp-line.lp-inactive-line {
+  opacity: 0.5;
 }
 
 .lp-node {
@@ -49,58 +48,6 @@
   transform: translate(-50%, -50%);
   border-radius: 18px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-/* Trailing "more to come" cloud (see plugins/learning-path.mjs), shown
-   whenever a session hasn't revealed yet. Built from a rounded-rectangle
-   body plus three overlapping circular puffs — no image/SVG asset, since
-   <svg> doesn't survive mystmd's HTML sanitizer. Its box (420x270) must
-   match CLOUD_WIDTH/CLOUD_HEIGHT in the plugin, which uses those only to
-   keep the shape from clipping the container edge. */
-.lp-cloud {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: 420px;
-  height: 270px;
-  pointer-events: none;
-}
-
-.lp-cloud-puff,
-.lp-cloud-body {
-  position: absolute;
-  background: var(--lp-cloud-bg);
-}
-
-.lp-cloud-body {
-  left: 30px;
-  top: 120px;
-  width: 360px;
-  height: 132px;
-  border-radius: 66px;
-}
-
-.lp-cloud-puff-1 {
-  left: 42px;
-  top: 54px;
-  width: 162px;
-  height: 162px;
-  border-radius: 50%;
-}
-
-.lp-cloud-puff-2 {
-  left: 144px;
-  top: 0;
-  width: 204px;
-  height: 204px;
-  border-radius: 50%;
-}
-
-.lp-cloud-puff-3 {
-  left: 288px;
-  top: 66px;
-  width: 144px;
-  height: 144px;
-  border-radius: 50%;
 }
 
 .lp-node.lp-main {
@@ -115,7 +62,21 @@
   background: var(--lp-extra-bg);
 }
 
-.lp-node a.lp-link {
+/* An unrevealed session's page isn't built yet (see nodeHtml in
+   plugins/learning-path.mjs), so its node is dimmed and its wrapper is a
+   plain span rather than a link — this overrides the main/extra background
+   and link color set above, so it must come after them. grayscale(1) also
+   desaturates the emoji glyph itself (color emoji is a painted glyph, which
+   CSS filters apply to like any other rendered pixels), not just the
+   background/text color set below — without it the emoji stayed full-color
+   and the node didn't read as disabled. */
+.lp-node.lp-inactive {
+  background: var(--lp-inactive-bg);
+  box-shadow: none;
+  filter: grayscale(1);
+}
+
+.lp-node .lp-link {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,12 +85,17 @@
   text-decoration: none;
 }
 
-.lp-node.lp-main a.lp-link {
+.lp-node.lp-main .lp-link {
   color: var(--lp-main-fg);
 }
 
-.lp-node.lp-extra a.lp-link {
+.lp-node.lp-extra .lp-link {
   color: var(--lp-extra-fg);
+}
+
+.lp-node.lp-inactive .lp-link {
+  color: var(--lp-inactive-fg);
+  cursor: default;
 }
 
 .lp-inner {
@@ -195,7 +161,7 @@
     box-shadow: none;
   }
 
-  .lp-node a.lp-link {
+  .lp-node .lp-link {
     width: auto;
     height: auto;
   }
@@ -221,51 +187,7 @@
     opacity: 0.9;
   }
 
-  /* The cloud follows the stacked list statically, like .lp-node above,
-     instead of keeping its absolutely-positioned desktop coordinates.
-     Stays `relative` (not `static`) because its puff/body children are
-     `position: absolute` (shared with desktop) and need *this* box as
-     their containing block -- `static` here would make them escape to
-     .lp-wrap instead, pinning them near the top of the whole path.
-     top/left must be reset too: the element still carries its inline
-     desktop `style="left:...;top:...;"`, which `position: static` was
-     ignoring outright but `relative` would otherwise honor as an offset
-     from its normal flow position. */
-  .lp-cloud {
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
-    transform: none !important;
-    width: 300px !important;
-    height: 192px !important;
-    margin: 4px 0 12px 18px;
-  }
-
-  .lp-cloud-body {
-    left: 12px;
-    top: 84px;
-    width: 270px;
-    height: 90px;
-  }
-
-  .lp-cloud-puff-1 {
-    left: 18px;
-    top: 30px;
-    width: 108px;
-    height: 108px;
-  }
-
-  .lp-cloud-puff-2 {
-    left: 96px;
-    top: 0;
-    width: 138px;
-    height: 138px;
-  }
-
-  .lp-cloud-puff-3 {
-    left: 198px;
-    top: 36px;
-    width: 96px;
-    height: 96px;
+  .lp-node.lp-inactive {
+    opacity: 0.6;
   }
 }
