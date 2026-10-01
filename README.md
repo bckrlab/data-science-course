@@ -27,6 +27,18 @@ rm -rf .venv
 uv sync -p 3.12
 ```
 
+If `uv python install 3.12` itself fails with a permissions error (e.g.
+`Permission denied` writing into `UV_PYTHON_INSTALL_DIR`), that directory is
+shared/read-only for your user. Point it at a directory you own instead, and
+pass the same override to every subsequent `uv` command (`sync`, `run`, ...):
+```
+export UV_PYTHON_INSTALL_DIR=~/.local/share/uv/python
+uv python install 3.12
+rm -rf .venv
+uv sync -p 3.12
+uv run jupyter book start
+```
+
 ### Revealing the next session
 
 The deployed book ships sessions progressively as the live course
