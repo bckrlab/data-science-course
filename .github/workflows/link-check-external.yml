@@ -12,12 +12,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install nbconvert
+        run: pip install nbconvert
       - name: Check external links in notebook content
         uses: lycheeverse/lychee-action@v2
         with:
+          # --preprocess converts each notebook to Markdown first (see the
+          # script for why: raw .ipynb JSON confuses lychee's URL extraction).
           args: >-
             --no-progress
             --scheme https
             --scheme http
+            --preprocess ./scripts/nbconvert-stdout.sh
             './chapters/**/*.ipynb'
           failIfEmpty: false
