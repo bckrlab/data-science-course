@@ -22,10 +22,17 @@ jobs:
         with:
           # --preprocess converts each notebook to Markdown first (see the
           # script for why: raw .ipynb JSON confuses lychee's URL extraction).
+          #
+          # --exclude 'doi.org/10.1002/nme.2750': Wiley's WAF blocks automated
+          # requests to this DOI with a 403 (confirmed manually, including
+          # with browser-like headers; it's not a lychee/extraction issue).
+          # The link itself is fine for real readers, so it's excluded here
+          # instead of flagging it every run. Other doi.org links stay checked.
           args: >-
             --no-progress
             --scheme https
             --scheme http
             --preprocess ./scripts/nbconvert-stdout.sh
+            --exclude 'doi\.org/10\.1002/nme\.2750'
             './chapters/**/*.ipynb'
           failIfEmpty: false
