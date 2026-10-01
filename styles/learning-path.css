@@ -76,6 +76,32 @@
   filter: grayscale(1);
 }
 
+/* Trailing "continues elsewhere" node (see continuationNodeHtml in
+   plugins/learning-path.mjs): the course's own sessions end here, but
+   exercises continue afterward with a Visualization unit taught by a
+   different instructor in a different format, so it isn't a real,
+   linkable session. A dashed outline and low opacity (rather than the
+   solid fill of .lp-main/.lp-extra, or the grayscale fill of
+   .lp-inactive) mark it as "something else, elsewhere" instead of
+   "a session we haven't revealed yet". */
+.lp-node.lp-continuation {
+  width: 72px;
+  height: 72px;
+  background: transparent;
+  border: 2px dashed var(--lp-line);
+  box-shadow: none;
+  opacity: 0.55;
+}
+
+.lp-node.lp-continuation .lp-link {
+  color: var(--lp-line);
+  cursor: default;
+}
+
+.lp-node.lp-continuation .lp-emoji {
+  font-size: 2rem;
+}
+
 .lp-node .lp-link {
   display: flex;
   align-items: center;
