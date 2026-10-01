@@ -1,0 +1,23 @@
+name: External Link Check
+
+on:
+  schedule:
+    # Weekly, Monday 06:00 UTC. External link rot is on its own clock and
+    # must not block content deploys, so this runs independently of deploy.yml.
+    - cron: '0 6 * * 1'
+  workflow_dispatch: {}
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check external links in notebook content
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --scheme https
+            --scheme http
+            './chapters/**/*.ipynb'
+          failIfEmpty: false

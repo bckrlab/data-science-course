@@ -30,6 +30,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Check for references to the deleted old-year content path
+        # The pattern is built at runtime (not spelled out literally) so this
+        # step's own source doesn't trip its own check.
+        run: |
+          pattern='ws-24''-25'
+          if git grep -nI "$pattern"; then
+            code=0
+          else
+            code=$?
+          fi
+          if [ "$code" -eq 0 ]; then
+            echo "::error::Found a reference to the deleted ${pattern} path (see above). It should no longer be referenced anywhere in the live branch." >&2
+            exit 1
+          elif [ "$code" -ne 1 ]; then
+            echo "::error::git grep exited with unexpected status $code while checking for ${pattern} references" >&2
+            exit "$code"
+          fi
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - uses: actions/setup-node@v4
@@ -39,6 +56,21 @@ jobs:
         run: npm install -g jupyter-book
       - name: Build HTML Assets
         run: jupyter-book build --html
+      - name: Resolve BASE_URL prefix for link checking
+        # BASE_URL (e.g. /data-science-course) is baked into every absolute
+        # href in the built site. This symlink makes that prefix resolve back
+        # to _build/html so lychee's --root-dir can map a prefixed href back
+        # to the real file on disk.
+        run: ln -s html "_build${BASE_URL}"
+      - name: Check internal links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline
+            --no-progress
+            --root-dir ${{ github.workspace }}/_build
+            './_build/html/**/*.html'
+          failIfEmpty: false
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
