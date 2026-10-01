@@ -1,5 +1,6 @@
 [![bckrlab.org](https://img.shields.io/badge/bckrlab.org-blue?style=flat)](https://bckrlab.org/data-science-course/)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bckrlab/data-science-course/HEAD)
+[![Check Links](https://github.com/bckrlab/data-science-course/actions/workflows/link-check-external.yml/badge.svg)](https://github.com/bckrlab/data-science-course/actions/workflows/link-check-external.yml)
 
 # Data Science Course
 

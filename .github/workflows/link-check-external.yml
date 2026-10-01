@@ -2,9 +2,9 @@ name: External Link Check
 
 on:
   schedule:
-    # Weekly, Monday 06:00 UTC. External link rot is on its own clock and
+    # Monthly, 1st at 06:00 UTC. External link rot is on its own clock and
     # must not block content deploys, so this runs independently of deploy.yml.
-    - cron: '0 6 * * 1'
+    - cron: '0 6 1 * *'
   workflow_dispatch: {}
 
 jobs:
