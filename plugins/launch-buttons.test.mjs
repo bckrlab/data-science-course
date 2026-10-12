@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { addLaunchBadges, binderUrl, readLaunchConfig } from './launch-buttons.mjs';
+import { addLaunchBadges, binderUrl, colabUrl, readLaunchConfig } from './launch-buttons.mjs';
 
 const MYST_YML = `version: 1
 project:
@@ -62,6 +62,14 @@ test('binderUrl deep-links the notebook into JupyterLab', () => {
   );
 });
 
+test('colabUrl opens the notebook from GitHub in Colab', () => {
+  assert.equal(
+    colabUrl(CONFIG, 'chapters/exercise_02/CURVE.ipynb'),
+    'https://colab.research.google.com/github/bckrlab/data-science-course/blob/main' +
+      '/chapters/exercise_02/CURVE.ipynb',
+  );
+});
+
 test('a notebook page gets a Binder badge as its first block', () => {
   const tree = notebookTree();
   addLaunchBadges(tree, '/repo/chapters/exercise_01/intro-to-python_tasks.ipynb', CONFIG, ROOT);
@@ -78,13 +86,30 @@ test('a notebook page gets a Binder badge as its first block', () => {
   assert.ok(link.children[0].alt);
 });
 
-test('the badge is kept out of PDF exports', () => {
+test('a notebook page gets a Colab badge next to the Binder badge', () => {
+  const tree = notebookTree();
+  addLaunchBadges(tree, '/repo/chapters/exercise_01/intro-to-python_tasks.ipynb', CONFIG, ROOT);
+
+  assert.equal(tree.children.length, 3);
+  assert.equal(tree.children[0].children.length, 1, 'both badges share one paragraph');
+  const [, colab] = badgeLinks(tree);
+  assert.equal(
+    colab.url,
+    'https://colab.research.google.com/github/bckrlab/data-science-course/blob/main' +
+      '/chapters/exercise_01/intro-to-python_tasks.ipynb',
+  );
+  assert.equal(colab.children[0].type, 'image');
+  assert.equal(colab.children[0].url, 'https://colab.research.google.com/assets/colab-badge.svg');
+  assert.ok(colab.children[0].alt);
+});
+
+test('the badges are kept out of PDF exports', () => {
   const tree = notebookTree();
   addLaunchBadges(tree, '/repo/chapters/exercise_01/intro-to-python_tasks.ipynb', CONFIG, ROOT);
   assert.deepEqual(tree.children[0].data.tags, ['no-pdf']);
 });
 
-test('a markdown page gets no badge', () => {
+test('a markdown page gets no badges', () => {
   const tree = notebookTree();
   addLaunchBadges(tree, '/repo/index.md', CONFIG, ROOT);
   assert.deepEqual(tree, notebookTree());

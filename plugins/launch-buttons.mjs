@@ -1,12 +1,12 @@
-// MyST transform plugin: puts a one-click "launch Binder" badge at the top of
-// every notebook page, deep-linking that page's own .ipynb into JupyterLab
-// on mybinder.org.
+// MyST transform plugin: puts one-click "launch Binder" and "Open in Colab"
+// badges at the top of every notebook page, deep-linking that page's own
+// .ipynb into JupyterLab on mybinder.org and into Google Colab.
 //
 // mystmd's built-in launch button (`project.jupyter: true`) isn't used: it
 // isn't one-click (readers paste a hub URL into a menu), is marked
 // experimental, and doesn't support Colab.
 //
-// The badge is emitted as link/image mdast nodes, not raw HTML, since the
+// The badges are emitted as link/image mdast nodes, not raw HTML, since the
 // render pipeline strips raw <img> (see the constraints comment in
 // learning-path.mjs). The notebooks themselves are untouched, so a newly
 // revealed session gets its badges just by entering the toc.
@@ -19,6 +19,7 @@ const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MYST_YML = path.join(ROOT, 'myst.yml');
 
 const BINDER_BADGE = 'https://mybinder.org/badge_logo.svg';
+const COLAB_BADGE = 'https://colab.research.google.com/assets/colab-badge.svg';
 
 // Value of the scalar at `keys` (a path of nested mapping keys) in a block-
 // style YAML document. Plugins aren't handed the project config and there's
@@ -64,10 +65,20 @@ export function binderUrl({ github, ref }, notebookPath) {
   return `https://mybinder.org/v2/gh/${github}/${ref}?urlpath=lab/tree/${encodeURI(notebookPath)}`;
 }
 
+// Colab has no environment config of its own, so it opens the notebook
+// straight from GitHub at the same repo/ref as Binder.
+export function colabUrl({ github, ref }, notebookPath) {
+  return `https://colab.research.google.com/github/${github}/blob/${ref}/${encodeURI(notebookPath)}`;
+}
+
+function badge(url, imageUrl, alt) {
+  return { type: 'link', url, children: [{ type: 'image', url: imageUrl, alt }] };
+}
+
 // Prepends the badge block to a notebook page's tree; other pages are left
 // alone. `file` is the page's absolute source path, `root` the repo root.
 // The block is tagged no-pdf since a link to a live notebook is meaningless
-// on paper, and LaTeX can't include the remote SVG badge anyway.
+// on paper, and LaTeX can't include the remote SVG badges anyway.
 export function addLaunchBadges(tree, file, config, root) {
   if (path.extname(file) !== '.ipynb') return;
   const notebookPath = path.relative(root, file).split(path.sep).join('/');
@@ -78,11 +89,9 @@ export function addLaunchBadges(tree, file, config, root) {
       {
         type: 'paragraph',
         children: [
-          {
-            type: 'link',
-            url: binderUrl(config, notebookPath),
-            children: [{ type: 'image', url: BINDER_BADGE, alt: 'Launch Binder' }],
-          },
+          badge(binderUrl(config, notebookPath), BINDER_BADGE, 'Launch Binder'),
+          { type: 'text', value: ' ' },
+          badge(colabUrl(config, notebookPath), COLAB_BADGE, 'Open in Colab'),
         ],
       },
     ],
@@ -91,7 +100,7 @@ export function addLaunchBadges(tree, file, config, root) {
 
 const launchBadgeTransform = {
   name: 'launch-buttons',
-  doc: 'Prepends a launch-on-Binder badge to every notebook page.',
+  doc: 'Prepends launch-on-Binder and open-in-Colab badges to every notebook page.',
   stage: 'document',
   plugin: () => {
     const config = readLaunchConfig(fs.readFileSync(MYST_YML, 'utf-8'));
