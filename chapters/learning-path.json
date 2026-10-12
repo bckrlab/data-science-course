@@ -6,8 +6,7 @@
       "revealed": true,
       "subtopics": [
         { "title": "Python Basics", "emoji": "🐍", "role": "main", "file": "chapters/exercise_01/intro-to-python_tasks.ipynb" },
-        { "title": "Python Tutorial", "emoji": "📘", "role": "extra", "file": "chapters/exercise_01/intro-to-python_tutorial.ipynb" },
-        { "title": "CURVE", "emoji": "🧹", "role": "extra", "file": "chapters/exercise_01/CURVE.ipynb" }
+        { "title": "Python Tutorial", "emoji": "📘", "role": "extra", "file": "chapters/exercise_01/intro-to-python_tutorial.ipynb" }
       ]
     },
     {
@@ -15,7 +14,8 @@
       "title": "Learning from Data",
       "revealed": false,
       "subtopics": [
-        { "title": "Learning from Data", "emoji": "🎯", "role": "main", "file": "chapters/exercise_02.ipynb" }
+        { "title": "Learning from Data", "emoji": "🎯", "role": "main", "file": "chapters/exercise_02/learning-from-data.ipynb" },
+        { "title": "CURVE", "emoji": "🧹", "role": "extra", "file": "chapters/exercise_02/CURVE.ipynb" }
       ]
     },
     {
@@ -69,7 +69,7 @@
       "title": "Continuous Time Markov Chains",
       "revealed": false,
       "subtopics": [
-        { "title": "CTMC", "emoji": "🔗", "role": "main", "file": "chapters/exercise_08.ipynb" }
+        { "title": "CTMC", "emoji": "🔗", "role": "main", "file": "chapters/exercise_08/continuous-time-markov-chains.ipynb" }
       ]
     },
     {
@@ -86,7 +86,7 @@
       "title": "Bayesian Inference",
       "revealed": false,
       "subtopics": [
-        { "title": "Approximate Bayesian Inference", "emoji": "🔮", "role": "main", "file": "chapters/exercise_10.ipynb" }
+        { "title": "Approximate Bayesian Inference", "emoji": "🔮", "role": "main", "file": "chapters/exercise_10/approximate-bayesian-inference.ipynb" }
       ]
     },
     {

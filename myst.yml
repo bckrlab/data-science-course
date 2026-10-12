@@ -25,7 +25,6 @@ project:
       children:
         - file: chapters/exercise_01/intro-to-python_tasks.ipynb
         - file: chapters/exercise_01/intro-to-python_tutorial.ipynb
-        - file: chapters/exercise_01/CURVE.ipynb
 site:
   options:
     favicon: favicon.ico
