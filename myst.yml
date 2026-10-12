@@ -15,6 +15,7 @@ project:
     - references.bib
   plugins:
     - plugins/learning-path.mjs
+    - plugins/launch-buttons.mjs
   exports:
     - format: pdf
       template: plain_latex_book
