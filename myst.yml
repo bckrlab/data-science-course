@@ -28,7 +28,6 @@ project:
         - file: chapters/exercise_01/intro-to-python_tutorial.ipynb
     - title: Exercise 02
       children:
-        - file: chapters/exercise_02/learning-from-data.ipynb
         - file: chapters/exercise_02/CURVE.ipynb
 site:
   options:

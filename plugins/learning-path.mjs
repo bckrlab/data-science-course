@@ -73,8 +73,8 @@ function escapeHtml(value) {
     .replace(/"/g, '&quot;');
 }
 
-// chapters/exercise_03/pca-dimensionality-reduction.ipynb
-//   -> chapters/exercise-03/pca-dimensionality-reduction
+// chapters/exercise_04/pca-dimensionality-reduction.ipynb
+//   -> chapters/exercise-04/pca-dimensionality-reduction
 function fileToHref(file) {
   const slug = file
     .replace(/^chapters\//, '')

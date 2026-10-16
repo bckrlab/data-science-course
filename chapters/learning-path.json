@@ -11,92 +11,99 @@
     },
     {
       "number": "02",
-      "title": "Learning from Data",
+      "title": "CURVE",
       "revealed": true,
       "subtopics": [
-        { "title": "Learning from Data", "emoji": "🎯", "role": "main", "file": "chapters/exercise_02/learning-from-data.ipynb" },
-        { "title": "CURVE", "emoji": "🧹", "role": "extra", "file": "chapters/exercise_02/CURVE.ipynb" }
+        { "title": "CURVE", "emoji": "🧹", "role": "main", "file": "chapters/exercise_02/CURVE.ipynb" }
       ]
     },
     {
       "number": "03",
-      "title": "PCA & Clustering",
+      "title": "Learning from Data",
       "revealed": false,
       "subtopics": [
-        { "title": "PCA", "emoji": "📊", "role": "main", "file": "chapters/exercise_03/pca-dimensionality-reduction.ipynb" },
-        { "title": "K-Means", "emoji": "🧲", "role": "extra", "file": "chapters/exercise_03/kmeans-clustering.ipynb" }
+        { "title": "Learning from Data", "emoji": "🎯", "role": "main", "file": "chapters/exercise_03/learning-from-data.ipynb" }
       ]
     },
     {
       "number": "04",
-      "title": "Evaluation",
+      "title": "PCA & Clustering",
       "revealed": false,
       "subtopics": [
-        { "title": "Metrics", "emoji": "📏", "role": "main", "file": "chapters/exercise_04/evaluation-metrics.ipynb" },
-        { "title": "Holdout & CV", "emoji": "🔁", "role": "extra", "file": "chapters/exercise_04/holdout-cross-validation.ipynb" },
-        { "title": "Reference Values & Imbalance", "emoji": "⚖️", "role": "extra", "file": "chapters/exercise_04/reference-values-and-imbalance.ipynb" }
+        { "title": "PCA", "emoji": "📊", "role": "main", "file": "chapters/exercise_04/pca-dimensionality-reduction.ipynb" },
+        { "title": "K-Means", "emoji": "🧲", "role": "extra", "file": "chapters/exercise_04/kmeans-clustering.ipynb" }
       ]
     },
     {
       "number": "05",
-      "title": "Linear Regression",
+      "title": "Evaluation",
       "revealed": false,
       "subtopics": [
-        { "title": "Regression Basics", "emoji": "📈", "role": "main", "file": "chapters/exercise_05/linear-regression-basics.ipynb" },
-        { "title": "OLS & Projections", "emoji": "📐", "role": "extra", "file": "chapters/exercise_05/ols-projection-geometry.ipynb" }
+        { "title": "Metrics", "emoji": "📏", "role": "main", "file": "chapters/exercise_05/evaluation-metrics.ipynb" },
+        { "title": "Holdout & CV", "emoji": "🔁", "role": "extra", "file": "chapters/exercise_05/holdout-cross-validation.ipynb" },
+        { "title": "Reference Values & Imbalance", "emoji": "⚖️", "role": "extra", "file": "chapters/exercise_05/reference-values-and-imbalance.ipynb" }
       ]
     },
     {
       "number": "06",
-      "title": "Regularization & Classification",
+      "title": "Linear Regression",
       "revealed": false,
       "subtopics": [
-        { "title": "Ridge & Lasso", "emoji": "🪢", "role": "main", "file": "chapters/exercise_06/regularization-ridge-lasso.ipynb" },
-        { "title": "Linear vs Logistic", "emoji": "🔀", "role": "extra", "file": "chapters/exercise_06/linear-vs-logistic-classification.ipynb" }
+        { "title": "Regression Basics", "emoji": "📈", "role": "main", "file": "chapters/exercise_06/linear-regression-basics.ipynb" },
+        { "title": "OLS & Projections", "emoji": "📐", "role": "extra", "file": "chapters/exercise_06/ols-projection-geometry.ipynb" }
       ]
     },
     {
       "number": "07",
-      "title": "MLPs & CNNs",
+      "title": "Regularization & Classification",
       "revealed": false,
       "subtopics": [
-        { "title": "MLPs from First Principles", "emoji": "🧠", "role": "main", "file": "chapters/exercise_07/mlp-foundations.ipynb" },
-        { "title": "Hands-on PyTorch", "emoji": "🔥", "role": "extra", "file": "chapters/exercise_07/mlp-implementation-and-cnn.ipynb" }
+        { "title": "Ridge & Lasso", "emoji": "🪢", "role": "main", "file": "chapters/exercise_07/regularization-ridge-lasso.ipynb" },
+        { "title": "Linear vs Logistic", "emoji": "🔀", "role": "extra", "file": "chapters/exercise_07/linear-vs-logistic-classification.ipynb" }
       ]
     },
     {
       "number": "08",
-      "title": "Continuous Time Markov Chains",
+      "title": "MLPs & CNNs",
       "revealed": false,
       "subtopics": [
-        { "title": "CTMC", "emoji": "🔗", "role": "main", "file": "chapters/exercise_08/continuous-time-markov-chains.ipynb" }
+        { "title": "MLPs from First Principles", "emoji": "🧠", "role": "main", "file": "chapters/exercise_08/mlp-foundations.ipynb" },
+        { "title": "Hands-on PyTorch", "emoji": "🔥", "role": "extra", "file": "chapters/exercise_08/mlp-implementation-and-cnn.ipynb" }
       ]
     },
     {
       "number": "09",
-      "title": "Experiment Design",
+      "title": "Continuous Time Markov Chains",
       "revealed": false,
       "subtopics": [
-        { "title": "Experiment Design", "emoji": "🎲", "role": "main", "file": "chapters/exercise_09/full-factorial-and-lhs-design.ipynb" },
-        { "title": "TPLHD", "emoji": "🧩", "role": "extra", "file": "chapters/exercise_09/tplhd-optimized-lhs.ipynb" }
+        { "title": "CTMC", "emoji": "🔗", "role": "main", "file": "chapters/exercise_09/continuous-time-markov-chains.ipynb" }
       ]
     },
     {
       "number": "10",
-      "title": "Bayesian Inference",
+      "title": "Experiment Design",
       "revealed": false,
       "subtopics": [
-        { "title": "Approximate Bayesian Inference", "emoji": "🔮", "role": "main", "file": "chapters/exercise_10/approximate-bayesian-inference.ipynb" }
+        { "title": "Experiment Design", "emoji": "🎲", "role": "main", "file": "chapters/exercise_10/full-factorial-and-lhs-design.ipynb" },
+        { "title": "TPLHD", "emoji": "🧩", "role": "extra", "file": "chapters/exercise_10/tplhd-optimized-lhs.ipynb" }
       ]
     },
     {
       "number": "11",
+      "title": "Bayesian Inference",
+      "revealed": false,
+      "subtopics": [
+        { "title": "Approximate Bayesian Inference", "emoji": "🔮", "role": "main", "file": "chapters/exercise_11/approximate-bayesian-inference.ipynb" }
+      ]
+    },
+    {
+      "number": "12",
       "title": "Decision Trees",
       "revealed": false,
       "subtopics": [
-        { "title": "Decision Trees", "emoji": "🌳", "role": "main", "file": "chapters/exercise_11/decision-tree-classifier-fitting.ipynb" },
-        { "title": "Manual Tree", "emoji": "✍️", "role": "extra", "file": "chapters/exercise_11/manual-decision-tree.ipynb" },
-        { "title": "Random Forests", "emoji": "🌲", "role": "extra", "file": "chapters/exercise_11/random-forests.ipynb" }
+        { "title": "Decision Trees", "emoji": "🌳", "role": "main", "file": "chapters/exercise_12/decision-tree-classifier-fitting.ipynb" },
+        { "title": "Manual Tree", "emoji": "✍️", "role": "extra", "file": "chapters/exercise_12/manual-decision-tree.ipynb" },
+        { "title": "Random Forests", "emoji": "🌲", "role": "extra", "file": "chapters/exercise_12/random-forests.ipynb" }
       ]
     }
   ]
