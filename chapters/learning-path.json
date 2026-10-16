@@ -73,37 +73,37 @@
     },
     {
       "number": "09",
-      "title": "Continuous Time Markov Chains",
+      "title": "Decision Trees",
       "revealed": false,
       "subtopics": [
-        { "title": "CTMC", "emoji": "🔗", "role": "main", "file": "chapters/exercise_09/continuous-time-markov-chains.ipynb" }
+        { "title": "Decision Trees", "emoji": "🌳", "role": "main", "file": "chapters/exercise_09/decision-tree-classifier-fitting.ipynb" },
+        { "title": "Manual Tree", "emoji": "✍️", "role": "extra", "file": "chapters/exercise_09/manual-decision-tree.ipynb" },
+        { "title": "Random Forests", "emoji": "🌲", "role": "extra", "file": "chapters/exercise_09/random-forests.ipynb" }
       ]
     },
     {
       "number": "10",
-      "title": "Experiment Design",
+      "title": "Continuous Time Markov Chains",
       "revealed": false,
       "subtopics": [
-        { "title": "Experiment Design", "emoji": "🎲", "role": "main", "file": "chapters/exercise_10/full-factorial-and-lhs-design.ipynb" },
-        { "title": "TPLHD", "emoji": "🧩", "role": "extra", "file": "chapters/exercise_10/tplhd-optimized-lhs.ipynb" }
+        { "title": "CTMC", "emoji": "🔗", "role": "main", "file": "chapters/exercise_10/continuous-time-markov-chains.ipynb" }
       ]
     },
     {
       "number": "11",
-      "title": "Bayesian Inference",
+      "title": "Experiment Design",
       "revealed": false,
       "subtopics": [
-        { "title": "Approximate Bayesian Inference", "emoji": "🔮", "role": "main", "file": "chapters/exercise_11/approximate-bayesian-inference.ipynb" }
+        { "title": "Experiment Design", "emoji": "🎲", "role": "main", "file": "chapters/exercise_11/full-factorial-and-lhs-design.ipynb" },
+        { "title": "TPLHD", "emoji": "🧩", "role": "extra", "file": "chapters/exercise_11/tplhd-optimized-lhs.ipynb" }
       ]
     },
     {
       "number": "12",
-      "title": "Decision Trees",
+      "title": "Bayesian Inference",
       "revealed": false,
       "subtopics": [
-        { "title": "Decision Trees", "emoji": "🌳", "role": "main", "file": "chapters/exercise_12/decision-tree-classifier-fitting.ipynb" },
-        { "title": "Manual Tree", "emoji": "✍️", "role": "extra", "file": "chapters/exercise_12/manual-decision-tree.ipynb" },
-        { "title": "Random Forests", "emoji": "🌲", "role": "extra", "file": "chapters/exercise_12/random-forests.ipynb" }
+        { "title": "Approximate Bayesian Inference", "emoji": "🔮", "role": "main", "file": "chapters/exercise_12/approximate-bayesian-inference.ipynb" }
       ]
     }
   ]
