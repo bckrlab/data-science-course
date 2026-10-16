@@ -12,7 +12,7 @@
     {
       "number": "02",
       "title": "Learning from Data",
-      "revealed": false,
+      "revealed": true,
       "subtopics": [
         { "title": "Learning from Data", "emoji": "🎯", "role": "main", "file": "chapters/exercise_02/learning-from-data.ipynb" },
         { "title": "CURVE", "emoji": "🧹", "role": "extra", "file": "chapters/exercise_02/CURVE.ipynb" }
