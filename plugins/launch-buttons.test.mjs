@@ -62,11 +62,11 @@ test('binderUrl deep-links the notebook into JupyterLab', () => {
   );
 });
 
-test('colabUrl opens the notebook from GitHub in Colab', () => {
+test('colabUrl opens the Colab variant of the notebook from GitHub', () => {
   assert.equal(
     colabUrl(CONFIG, 'chapters/exercise_02/CURVE.ipynb'),
     'https://colab.research.google.com/github/bckrlab/data-science-course/blob/main' +
-      '/chapters/exercise_02/CURVE.ipynb',
+      '/colab/exercise_02/CURVE.ipynb',
   );
 });
 
@@ -96,7 +96,7 @@ test('a notebook page gets a Colab badge next to the Binder badge', () => {
   assert.equal(
     colab.url,
     'https://colab.research.google.com/github/bckrlab/data-science-course/blob/main' +
-      '/chapters/exercise_01/intro-to-python_tasks.ipynb',
+      '/colab/exercise_01/intro-to-python_tasks.ipynb',
   );
   assert.equal(colab.children[0].type, 'image');
   assert.equal(colab.children[0].url, 'https://colab.research.google.com/assets/colab-badge.svg');

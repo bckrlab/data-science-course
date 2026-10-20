@@ -66,9 +66,12 @@ export function binderUrl({ github, ref }, notebookPath) {
 }
 
 // Colab has no environment config of its own, so it opens the notebook
-// straight from GitHub at the same repo/ref as Binder.
+// straight from GitHub at the same repo/ref as Binder. Colab doesn't render
+// MyST admonitions either, so it gets the stripped variant the exercise build
+// writes to colab/ in place of chapters/.
 export function colabUrl({ github, ref }, notebookPath) {
-  return `https://colab.research.google.com/github/${github}/blob/${ref}/${encodeURI(notebookPath)}`;
+  const colabPath = notebookPath.replace(/^chapters\//, 'colab/');
+  return `https://colab.research.google.com/github/${github}/blob/${ref}/${encodeURI(colabPath)}`;
 }
 
 function badge(url, imageUrl, alt) {
