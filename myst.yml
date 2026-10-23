@@ -29,6 +29,9 @@ project:
     - title: Exercise 02
       children:
         - file: chapters/exercise_02/CURVE.ipynb
+    - title: Exercise 03
+      children:
+        - file: chapters/exercise_03/learning-from-data.ipynb
 site:
   options:
     favicon: favicon.ico
