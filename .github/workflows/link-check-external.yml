@@ -28,11 +28,17 @@ jobs:
           # with browser-like headers; it's not a lychee/extraction issue).
           # The link itself is fine for real readers, so it's excluded here
           # instead of flagging it every run. Other doi.org links stay checked.
+          #
+          # --exclude 'sciencedirect.com': Elsevier's bot protection answers
+          # CI requests with a 403 even for open-access articles. Excluded by
+          # domain since every ScienceDirect link fails the same way.
+          # Accepting 403 globally would hide genuinely dead links elsewhere.
           args: >-
             --no-progress
             --scheme https
             --scheme http
             --preprocess ./scripts/nbconvert-stdout.sh
             --exclude 'doi\.org/10\.1002/nme\.2750'
+            --exclude 'sciencedirect\.com'
             './chapters/**/*.ipynb'
           failIfEmpty: false
