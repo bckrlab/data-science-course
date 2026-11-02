@@ -27,21 +27,21 @@
     },
     {
       "number": "04",
-      "title": "PCA & Clustering",
+      "title": "Evaluation",
       "revealed": false,
       "subtopics": [
-        { "title": "PCA", "emoji": "📊", "role": "main", "file": "chapters/exercise_04/pca-dimensionality-reduction.ipynb" },
-        { "title": "K-Means", "emoji": "🧲", "role": "extra", "file": "chapters/exercise_04/kmeans-clustering.ipynb" }
+        { "title": "Metrics", "emoji": "📏", "role": "main", "file": "chapters/exercise_04/evaluation-metrics.ipynb" },
+        { "title": "Holdout & CV", "emoji": "🔁", "role": "extra", "file": "chapters/exercise_04/holdout-cross-validation.ipynb" },
+        { "title": "Reference Values & Imbalance", "emoji": "⚖️", "role": "extra", "file": "chapters/exercise_04/reference-values-and-imbalance.ipynb" }
       ]
     },
     {
       "number": "05",
-      "title": "Evaluation",
+      "title": "PCA & Clustering",
       "revealed": false,
       "subtopics": [
-        { "title": "Metrics", "emoji": "📏", "role": "main", "file": "chapters/exercise_05/evaluation-metrics.ipynb" },
-        { "title": "Holdout & CV", "emoji": "🔁", "role": "extra", "file": "chapters/exercise_05/holdout-cross-validation.ipynb" },
-        { "title": "Reference Values & Imbalance", "emoji": "⚖️", "role": "extra", "file": "chapters/exercise_05/reference-values-and-imbalance.ipynb" }
+        { "title": "PCA", "emoji": "📊", "role": "main", "file": "chapters/exercise_05/pca-dimensionality-reduction.ipynb" },
+        { "title": "K-Means", "emoji": "🧲", "role": "extra", "file": "chapters/exercise_05/kmeans-clustering.ipynb" }
       ]
     },
     {
