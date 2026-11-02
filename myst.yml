@@ -32,6 +32,11 @@ project:
     - title: Exercise 03
       children:
         - file: chapters/exercise_03/learning-from-data.ipynb
+    - title: Exercise 04
+      children:
+        - file: chapters/exercise_04/evaluation-metrics.ipynb
+        - file: chapters/exercise_04/holdout-cross-validation.ipynb
+        - file: chapters/exercise_04/reference-values-and-imbalance.ipynb
 site:
   options:
     favicon: favicon.ico

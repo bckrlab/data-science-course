@@ -28,7 +28,7 @@
     {
       "number": "04",
       "title": "Evaluation",
-      "revealed": false,
+      "revealed": true,
       "subtopics": [
         { "title": "Metrics", "emoji": "📏", "role": "main", "file": "chapters/exercise_04/evaluation-metrics.ipynb" },
         { "title": "Holdout & CV", "emoji": "🔁", "role": "extra", "file": "chapters/exercise_04/holdout-cross-validation.ipynb" },
