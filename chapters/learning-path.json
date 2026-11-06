@@ -38,7 +38,7 @@
     {
       "number": "05",
       "title": "PCA & Clustering",
-      "revealed": false,
+      "revealed": true,
       "subtopics": [
         { "title": "PCA", "emoji": "📊", "role": "main", "file": "chapters/exercise_05/pca-dimensionality-reduction.ipynb" },
         { "title": "K-Means", "emoji": "🧲", "role": "extra", "file": "chapters/exercise_05/kmeans-clustering.ipynb" }
